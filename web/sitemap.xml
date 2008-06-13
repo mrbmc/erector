@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset 
+		xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+		http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+<url>
+    <loc>http://www.landofwineandfood.com/</loc>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/Wine_Explorer.aspx</loc>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/California_Insiders.aspx</loc>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/Wine_and_Food.aspx</loc>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/featured_destination.aspx</loc>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/Sweepstakes.aspx</loc>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/sweeps_rules.aspx</loc>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/blog_andrewfirestone.aspx</loc>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/privacy_policy.aspx</loc>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/contact_us.aspx</loc>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/rc_annchen.aspx</loc>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/bio_andrewfirestone.aspx</loc>
+    <changefreq>weekly</changefreq>
+</url>
+<url>
+    <loc>http://www.landofwineandfood.com/featured_article.aspx</loc>
+    <changefreq>weekly</changefreq>
+</url>
+</urlset>

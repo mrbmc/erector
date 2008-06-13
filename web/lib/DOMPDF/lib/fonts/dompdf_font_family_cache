@@ -1,0 +1,72 @@
+array (
+  'sans-serif' => 
+  array (
+    'normal' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Helvetica',
+    'bold' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Helvetica-Bold',
+    'italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Helvetica-BoldOblique',
+    'bold_italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Helvetica-BoldOblique',
+  ),
+  'times' => 
+  array (
+    'normal' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-Roman',
+    'bold' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-Bold',
+    'italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-BoldItalic',
+    'bold_italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-BoldItalic',
+  ),
+  'times-roman' => 
+  array (
+    'normal' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-Roman',
+    'bold' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-Bold',
+    'italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-BoldItalic',
+    'bold_italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-BoldItalic',
+  ),
+  'courier' => 
+  array (
+    'normal' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier',
+    'bold' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier-Bold',
+    'italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier-BoldOblique',
+    'bold_italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier-BoldOblique',
+  ),
+  'helvetica' => 
+  array (
+    'normal' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Helvetica',
+    'bold' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Helvetica-Bold',
+    'italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Helvetica-BoldOblique',
+    'bold_italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Helvetica-BoldOblique',
+  ),
+  'zapfdingbats' => 
+  array (
+    'normal' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/ZapfDingbats',
+    'bold' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/ZapfDingbats',
+    'italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/ZapfDingbats',
+    'bold_italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/ZapfDingbats',
+  ),
+  'serif' => 
+  array (
+    'normal' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-Roman',
+    'bold' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-Bold',
+    'italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-Italic',
+    'bold_italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Times-BoldItalic',
+  ),
+  'monospace' => 
+  array (
+    'normal' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier',
+    'bold' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier-Bold',
+    'italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier-BoldOblique',
+    'bold_italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier-BoldOblique',
+  ),
+  'fixed' => 
+  array (
+    'normal' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier',
+    'bold' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier-Bold',
+    'italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier-BoldOblique',
+    'bold_italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/Courier-BoldOblique',
+  ),
+  'comic' => 
+  array (
+    'normal' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/comic',
+    'bold' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/comicbd',
+    'italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/comic',
+    'bold_italic' => 'C:\\PROJECTS\\novartis_storybook\\www\\code\\php\\DOMPDF/lib/fonts/comic',
+  ),
+)

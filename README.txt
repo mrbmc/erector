@@ -17,8 +17,8 @@ changes quickly and cleanly.
 
 LATEST VERSION
 ================================================================================
-The latest version of the ERECTOR can be found in our SVN repository here:
-https://presentation.edelman.com/svn/eis/tech/TEMPLATE/trunk/
+The latest version of the ERECTOR can be found in google code repository here:
+https://erector-php-framework.googlecode.com/svn/trunk/
 
 
 INSTALLATION
@@ -182,9 +182,9 @@ Installer and Update classes
 	- Smarty folder permissions
 	- DB creation
 	
-DB Naming Conventions
-	Implement Ovi's recommended naming conventions:
-	http://eislabs.com/wiki/uploads/5/5f/CodeNamingConventions.pdf
-	
-
 Dynamic model properties
+	populate model property names dynamically from the DB schema.
+	
+MYSQL5 VIEWS
+	Use views in MySQL5+ to handle assets & links and other compound queries.
+

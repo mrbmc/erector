@@ -5,6 +5,7 @@ abstract class Model {
 	protected $sql;
 	protected static $db;
 	protected static $table;
+	private $data = array();
 
 	function __construct($args=null)
 	{
@@ -45,6 +46,25 @@ abstract class Model {
 		$this->sql = "DELETE FROM ".self::$table." WHERE $matchcolumn = '$id'";
 		return self::$db->query($this->sql);
 	}
+
+
+	public function __set($name, $value) {
+		$this->data[$name] = $value;
+	}
+
+	public function __get($name) {
+		if (array_key_exists($name, $this->data))
+		    return $this->data[$name];
+	
+		$trace = debug_backtrace();
+		trigger_error(
+		'Undefined property: ' . $name .
+		' in ' . $trace[0]['file'] .
+		' on line ' . $trace[0]['line'],
+		E_USER_NOTICE);
+		return null;
+	}
+
 
 
 	public function setFrom ($data) {

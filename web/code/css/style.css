@@ -6,13 +6,12 @@ body, div, span, p, td
 font: 14px helvetica, arial, san-serif;
 color: #FFF;
 }
-a:link, a:visited {
+a, a:visited {
 color: #F0F;
-text-decoration: underline;
 }
 a:hover, a:visited:hover {
-background: #FF9;
-color: #666;
+background: #F0F;
+color: #FFF;
 }
 
 h1 {
@@ -33,7 +32,7 @@ letter-spacing: -1px;
  * LAYOUT
  */
 body { 
-background: #333;
+background: #222;
 margin: 0px;
 padding: 0px;
 }
@@ -46,7 +45,7 @@ margin: 10px auto;
 }
 
 #body {
-border: 1px solid #666;
+border: 1px solid #333;
 background: #000;
 padding: 5px;
 }
@@ -59,7 +58,9 @@ list-style-type: none;
 height: 15px;
 margin: 0;
 padding: 5px;
-border: 1px solid #000;
+border: 1px solid #333;
+border-bottom-width: 0px;
+background: #202020;
 }
 #globalnav li {
 margin:0px; 

@@ -4,7 +4,7 @@
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
  * DEBUGGING AND ERROR REPORTING
  */
-define("DEBUG",true); // This switch should turn on a slew of useful debugging functions
+define("DEBUG",true); // This boolean controls many useful debugging functions
 ini_set('display_errors', DEBUG);
 ini_set('error_reporting', (DEBUG ? (E_ERROR | E_WARNING | E_PARSE ) : E_ERROR));
 ini_set('include_path',ini_get('include_path').";".getcwd()."/lib/".";".getcwd()."/models/");
@@ -14,12 +14,13 @@ ini_set('include_path',ini_get('include_path').";".getcwd()."/lib/".";".getcwd()
  * Load some classes
  */
 define('LIB',getcwd() . "/lib");
-include_once LIB.'/Config.class.php';						//Settings and configuration
+include_once LIB.'/Config.class.php';					//Settings and configuration
+include_once LIB.'/Dispatcher.class.php';				//URL routing and control
 include_once LIB.'/DB/SimpleDB.class.php';				//DB persistence
-include_once LIB.'/Action.class.php';						//Page controller class
-include_once LIB.'/Model.class.php';						//Parent data model class
-include_once LIB.'/Session.class.php';						//Session management
-include_once LIB.'/facebook.php';							//Facebook
+include_once LIB.'/Action.class.php';					//Page controller class
+include_once LIB.'/Model.class.php';					//Parent data model class - ORM
+include_once LIB.'/Session.class.php';					//Session management
+include_once LIB.'/facebook/facebook.php';				//Facebook applications & pages
 include_once LIB.'/Paginate.class.php';					//List pagination class
 
 
@@ -51,6 +52,7 @@ function __autoload($class_name) {
  * control over URL -> action mapping
  * 
  */
+$dispatcher = new Dispatcher();
 $class = isset($_REQUEST['act']) ? ucfirst(strtolower($_REQUEST['act'])) : "Home";
 if(!file_exists("actions/" . $class . ".php"))
 	$class = "StaticPage";

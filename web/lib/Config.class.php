@@ -9,17 +9,31 @@ class Config
 	var $EMAIL_NAME = "Edelman Studios";
 	var $EMAIL_ADDRESS = "info@edelmanstudios.com";
 	var $UPLOADS = "/uploads";
+	var $ENV_STAGING = "LOCALHOST";
+	var $ENV_PRODUCTION = "";
 
 	/**
 	 * DATABASE CREDENTIALS
 	 */
-	var $dsn = array(
+	//PRODUCTION
+	private $dsn_production = array(
 		'type' => "mysql",
 		'host' => "localhost",
-		'db' => "template",
-		'user' => "template",
-		'pass' => "EIS315"
+		'db' => "",
+		'user' => "",
+		'pass' => ""
 	);
+	//STAGING
+	private $dsn_staging = array(
+		'type' => "mysql",
+		'host' => "localhost",
+		'db' => "erectordb",
+		'user' => "erector",
+		'pass' => "EIS215"
+	);
+	public function dsn () {
+		return (stristr($_SERVER["HTTP_HOST"],$this->ENV_STAGING)!==FALSE) ? $this->dsn_staging : $this->dsn_production;
+	}
 
 
 	/**

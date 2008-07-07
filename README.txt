@@ -1,6 +1,5 @@
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #++                                                                           +#
-#++                             EDELMAN DIGITAL                               +#
 #++                            ERECTOR FRAMEWORK                              +#
 #++                                                                           +#
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -8,11 +7,11 @@
 
 WHAT IS IT
 ================================================================================
-The ERECTOR Framework is a PHP 5 code framework for rapidly deploying web 
-projects and applications. It is designed to fit a variety of situations while 
-maintaining an extensible code structure. It's built on some core principles of
-object oriented design in order to support a dynamic feature set or design 
-changes quickly and cleanly.
+The ERECTOR Framework is a PHP 5 code framework for web projects and 
+applications. It's a personal concoction meant to straddle clinical abstraction 
+and the need to kludge your way through some projects. It uses principles of
+object oriented design in order to support a dynamic feature set and 
+user-interface changes quickly and cleanly.
 
 
 LATEST VERSION
@@ -42,12 +41,12 @@ INSTALLATION
 
 WHAT'S WITH THE NAME?
 ================================================================================
-Edelman Digital... E.D. ... Erector.... Get it? E.D.?
+Erect. Hehe.
 
 
 KEY FEATURES
 ================================================================================
-Object Oriented Programming
+Object Oriented
 	OOP code is easier to read, easier to debug, easier to change, less 
 	redundant, and more stable. Functionality, data, and pages are encapsulated 
 	in separate classes. 
@@ -91,8 +90,7 @@ REQUIRED WEB FILES
 
 	See the "REQUIRED WEB FILES" section for detailed documentation.
 
-
-EDELMAN DIGITAL CODE FILE STRUCTURE
+CODE FILE STRUCTURE
 	The project places important client side code in the same directory 
 	structure as all other Edelman Digital projects. This makes it easier to 
 	find and change client side code.
@@ -104,19 +102,19 @@ CODE FILE STRUCTURE
 ================================================================================
 /assets
 
-/web				The document root
+/web			The document root
 
-/web/lib			Code classes and configuration
-/web/actions		Codebehind classes for pages
-/web/models			data models for DB access
-/web/templates		html templates used by SMARTY
 /web/index.php		The controller
+/web/lib		Code classes and configuration
+/web/actions		Codebehind classes for pages
+/web/models		Data models for DB access
+/web/templates		html templates used by SMARTY
 /web/.htaccess		User Friendly URLs
 
 /web/images/
 /web/swf/
 
-/web/code			Client side code
+/web/code		Client side code
 /web/code/js		Javascript
 /web/code/css		Stylesheets
 
@@ -170,17 +168,14 @@ Todo: RSS
 TODO
 ================================================================================
 
-Environmental support
-	support staging, and development installations of the application easily.
-
 Dispatcher class
 	To extend and codify URL mapping.
 
 Installer and Update classes
-	Create an install script and update to manage DB changes.
+	Create an install & update script to manage DB changes.
 	- credential configuration (config file?)
 	- Smarty folder permissions
-	- DB creation
+	- DB creation / updates
 	
 Dynamic model properties
 	populate model property names dynamically from the DB schema.

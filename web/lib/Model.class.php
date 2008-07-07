@@ -11,7 +11,7 @@ abstract class Model {
 	{
 		global $CONFIG;
 		$this->s = Session::singleton();
-		self::$db = new SimpleDB($CONFIG->dsn);
+		self::$db = new SimpleDB($CONFIG->dsn());
 		self::$table = strtolower(get_class($this));
 
 		if($args!==null) {

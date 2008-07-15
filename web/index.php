@@ -53,13 +53,7 @@ function __autoload($class_name) {
  * 
  */
 $dispatcher = new Dispatcher();
-$class = isset($_REQUEST['act']) ? ucfirst(strtolower($_REQUEST['act'])) : "Home";
-if(!file_exists("actions/" . $class . ".php"))
-	$class = "StaticPage";
-include_once "actions/" . $class . ".php";
-if(class_exists($class))
-	$ACTION = new $class();
-
+$ACTION = $dispatcher->go();
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
  * 

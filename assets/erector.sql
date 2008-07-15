@@ -1,5 +1,3 @@
-
-
 DROP TABLE IF EXISTS `asset`;
 CREATE TABLE IF NOT EXISTS `asset` (
   `asset_id` int(10) unsigned NOT NULL auto_increment,
@@ -21,6 +19,11 @@ CREATE TABLE IF NOT EXISTS `asset_link` (
   `link_object_type` varchar(45) NOT NULL,
   PRIMARY KEY  (`link_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE VIEW assets AS 
+SELECT asset.*,link.* FROM
+asset
+LEFT JOIN asset_link AS link ON asset.asset_id = link.link_fk_asset_id;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (

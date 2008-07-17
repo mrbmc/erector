@@ -8,10 +8,12 @@
 WHAT IS IT
 ================================================================================
 The ERECTOR Framework is a PHP 5 code framework for web projects and 
-applications. It's a personal concoction meant to straddle clinical abstraction 
+applications. It's a personal concoction meant to straddle abstraction 
 and the need to kludge your way through some projects. It uses principles of
 object oriented design in order to support a dynamic feature set and 
 user-interface changes quickly and cleanly.
+
+Clean? Yes. Short functions. Small classes. Easy to read. East to fix.
 
 
 LATEST VERSION
@@ -101,19 +103,15 @@ CODE FILE STRUCTURE
 CODE FILE STRUCTURE
 ================================================================================
 /assets
-
 /web			The document root
-
 /web/index.php		The controller
 /web/lib		Code classes and configuration
 /web/actions		Codebehind classes for pages
 /web/models		Data models for DB access
 /web/templates		html templates used by SMARTY
 /web/.htaccess		User Friendly URLs
-
 /web/images/
 /web/swf/
-
 /web/code		Client side code
 /web/code/js		Javascript
 /web/code/css		Stylesheets
@@ -163,13 +161,11 @@ You can also override it with a query string:
 	http://localhost/news?format=xml
 
 Todo: RSS
+	XML automation
 
 
 TODO
 ================================================================================
-
-Dispatcher class
-	To extend and codify URL mapping.
 
 Installer and Update classes
 	Create an install & update script to manage DB changes.
@@ -177,9 +173,18 @@ Installer and Update classes
 	- Smarty folder permissions
 	- DB creation / updates
 	
+Configuration XML
+	might be better than putting it in the Class
+
+Dispatcher class
+	Support URL mapping in configuration class.
+
 Dynamic model properties
 	populate model property names dynamically from the DB schema.
+	- update 7/15/2008: might not work as well as expected. 
+	  Better off manually setting properties
 	
 MYSQL5 VIEWS
 	Use views in MySQL5+ to handle assets & links and other compound queries.
+	- update 7/15/2008: added 'assets' view.
 

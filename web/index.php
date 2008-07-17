@@ -52,8 +52,10 @@ function __autoload($class_name) {
  * control over URL -> action mapping
  * 
  */
-$dispatcher = new Dispatcher();
-$ACTION = $dispatcher->go();
+$DISPATCH = new Dispatcher();
+$ACTION = $DISPATCH->go();
+
+global $DISPATCH;
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
  * 

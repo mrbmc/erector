@@ -1,0 +1,197 @@
+/**++++++++++++++++++++++++++++++++
+ * TYPOGRAPHY
+ */
+body, div, span, p, td
+{
+font: 14px helvetica, arial, san-serif;
+color: #333;
+}
+a:link, a:visited {
+color: #3399CC;
+text-decoration: underline;
+}
+a:hover, a:visited:hover {
+background: #FF9;
+color: #666;
+}
+
+h1 {
+font: bold 24px arial, san-serif;
+letter-spacing: -1px;
+}
+h2 {
+font: bold 20px arial, san-serif;
+letter-spacing: -1px;
+color: #000;
+}
+h3 {
+font: bold 16px helvetica, arial, san-serif;
+letter-spacing: -1px;
+}
+
+h1.logo {
+display: inline;
+float: right;
+}
+
+/**++++++++++++++++++++++++++++++++
+ * Layout
+ */
+body { 
+background: #FFF;
+margin: 10px;
+padding: 0px;
+}
+
+#wrapper
+{
+width: 740px;
+padding: 0px;
+margin: 0px auto;
+}
+
+#header{
+padding: 10px;
+}
+#body {
+padding: 10px;
+border: 1px solid #CCC;
+background: #DFDFDF;
+}
+
+table {
+background: #666;
+width: 100%;
+border: solid #999;
+border-width: 0px 1px 1px 0px;
+}
+td, th {
+margin: 0px;
+padding: 2px;
+background: #FFF;
+border: solid #999;
+border-width: 1px 0px 0px 1px;
+}
+.clear {
+clear: both;
+}
+
+/**++++++++++++++++++++++++++++++++
+ * Navigation
+ */
+#globalnav {
+margin: 8px 0px 0px -1px;
+padding: 2px 0px;
+display: inline;
+}
+#globalnav li {
+margin: 0px 0px 0px 0px;
+padding: 2px 10px;
+list-style: none;
+display: inline;
+}
+.secondaryNav {
+display: inline;
+list-style: none;
+}
+.secondaryNav li {
+background: #fff;
+padding: 2px;
+margin: 2px;
+list-style: none;
+float:left;
+display: inline;
+height: 25px;
+vertical-align: top;
+}
+.secondaryNav form{
+display: inline;
+}
+.secondaryNav input{
+padding: 1px;
+font-size: 12px;
+}
+
+/**++++++++++++++++++++++++++++++++
+ * FORMS
+ */
+
+fieldset { 
+margin: 10px 45px;
+padding: 10px; 
+border: solid 0px #CCC; 
+background: #A6A6A6;
+width: 539px;
+color: #FFF;
+}
+.inner-2 fieldset p {
+clear: all;
+padding-left: 0px;
+}
+#userForm label {
+clear:both;
+display: inline;
+width: 150px;
+float:left;
+padding: 0 10px 0 0;
+margin: 10px 0PX;
+text-align:right;
+font-weight: bold;
+color: #FFF;
+}
+fieldset .txtInput {
+border: solid 1px #999;
+width: 140px;
+background: #CFECF3;
+}
+fieldset span.input {
+width: 200px;
+float:left;
+display: inline;
+margin: 10px 0;
+}
+.inner-2 fieldset span.status {
+margin: 0;
+padding: 0;
+width: 100px;
+display: inline;
+float: left;
+vertical-align: top;
+white-space: nowrap;
+}
+textarea {
+width: 300px;
+height: 80px;
+background: #CFECF3;
+}
+a.dp-choose-date {
+width: 16px;
+height: 16px;
+padding: 0;
+margin: 5px 3px 0;
+display: block;
+text-indent: -2000px;
+overflow: hidden;
+background: url(../../images/calendar.png) no-repeat; 
+}
+a.dp-choose-date.dp-disabled {
+}
+/* makes the input field shorter once the date picker code
+ * has run (to allow space for the calendar icon
+ */
+input.dp-applied {
+width: 140px;
+float: left;
+}
+fieldset label.error {
+  background:url("../../images/unchecked.gif") no-repeat 0px 0px;
+  padding-left: 16px;
+  padding-bottom: 2px;
+  color: #1f84cc;
+  text-align: left;
+  width: 150px;
+}
+
+#userForm label.checked {
+  background:url("../../images/checked.gif") no-repeat 0px 0px;
+}

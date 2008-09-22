@@ -116,30 +116,31 @@ class Presenter
 			$hdr = "";
 			foreach($o as $k => $v)
 			{
-				$hdr .= "$k	";
-				$str .= $this->is_box($v) ? "\n".$this->objToCSV($v) : "$v	";
+				$hdr .= "\"$k\",";
+				$str .= $this->is_box($v) ? "\n".$this->objToCSV($v) : "\"$v\",";
 			}
 			$str .= "\n";
 		}
 		return $hdr."\n".$str;
 	} 
 	private function xls () {
-		$this->OUTPUT .= $this->objToCSV($this->action->template);
+		$this->OUTPUT .= $this->objToCSV($this->action->data);
 
 		header("Pragma: public"); // required
 		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 		header("Cache-Control: private",false); // required for certain browsers 
 		header("Content-Type: application/vnd.ms-excel");
-		// change, added quotes to allow spaces in filenames, by Rajkumar Singh
-		header("Content-Disposition: attachment; filename=\"dashboard.csv\";" );
+		header("Content-Disposition: attachment; filename=\"".$this->action->title.".csv\";" );
 		header("Content-Transfer-Encoding: binary");
-		//header("Content-Length: ".filesize($filename));
 
-//		header("Content-Type: text/plain");
 		print $this->OUTPUT;
 	}
-	private function csv () { $this->xls(); }
+	private function csv () { 
+		$this->OUTPUT .= $this->objToCSV($this->action->data);
+		header("Content-type: text/plain");
+		print $this->OUTPUT;
+	}
 
 
 

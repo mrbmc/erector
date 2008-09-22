@@ -3,28 +3,29 @@
  */
 body, div, span, p, td
 {
-font: 14px helvetica, arial, san-serif;
-color: #FFF;
+font: 14px Helvetica, Arial, san-serif;
+color: #333;
 }
 a, a:visited {
-color: #F0F;
+color: #C00;
+text-decoration: none;
 }
 a:hover, a:visited:hover {
-background: #F0F;
+background: #C00;
 color: #FFF;
 }
 
 h1 {
-font: normal 24px Georgia,serif;
-letter-spacing: -1px;
+font: normal 24px Helvetica, Arial, san-serif;
+letter-spacing: -0.1em;
 }
 h2 {
 font: bold 20px helvetica, arial, san-serif;
-letter-spacing: -1px;
+letter-spacing: -0.1em;
 }
 h3 {
 font: bold 16px helvetica, arial, san-serif;
-letter-spacing: -1px;
+letter-spacing: -0.1em;
 }
 
 
@@ -32,23 +33,36 @@ letter-spacing: -1px;
  * LAYOUT
  */
 body { 
-background: #222;
+background: #EEE;
 margin: 0px;
 padding: 0px;
 }
 
-#wrapper
+#header
 {
 width: 740px;
-padding: 0px;
+padding: 5px;
 margin: 10px auto;
+border-top: 5px solid #666;
+background: #FFF;
 }
 
 #body {
-border: 1px solid #333;
-background: #000;
+width: 740px;
+margin: 10px auto;
 padding: 5px;
+border-top: 5px solid #666;
+background: #FFF;
 }
+
+#footer
+{
+width: 740px;
+margin: 10px auto;
+padding: 0px;
+border-top: 5px solid #666;
+}
+
 
 /******************************************
  * Navigation
@@ -56,11 +70,8 @@ padding: 5px;
 #globalnav {
 list-style-type: none;
 height: 15px;
-margin: 0;
+margin: 0px;
 padding: 5px;
-border: 1px solid #333;
-border-bottom-width: 0px;
-background: #202020;
 }
 #globalnav li {
 margin:0px; 

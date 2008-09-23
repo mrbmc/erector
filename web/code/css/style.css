@@ -3,7 +3,7 @@
  */
 body, div, span, p, td
 {
-font: 14px Helvetica, Arial, san-serif;
+font: 14px Arial, san-serif;
 color: #333;
 }
 a, a:visited {
@@ -28,6 +28,10 @@ font: bold 16px helvetica, arial, san-serif;
 letter-spacing: -0.1em;
 }
 
+#footer {
+	font-size: x-small;
+	font-weight: normal;
+}
 
 /******************************************
  * LAYOUT
@@ -41,7 +45,7 @@ padding: 0px;
 #header
 {
 width: 740px;
-padding: 5px;
+padding: 0px;
 margin: 10px auto;
 border-top: 5px solid #666;
 background: #FFF;
@@ -50,7 +54,7 @@ background: #FFF;
 #body {
 width: 740px;
 margin: 10px auto;
-padding: 5px;
+padding: 0px;
 border-top: 5px solid #666;
 background: #FFF;
 }
@@ -80,6 +84,9 @@ display:block;
 float: left;
 height: 15px;
 width: 72px;
+font-weight: bold;
+font-size: 10px;
+letter-spacing: 1px;
 }
 #nav_home { background: url(../../images/header/home_off.gif) no-repeat; }
 #nav_home a:hover { background-image: url(../../images/header/home_on.gif); }

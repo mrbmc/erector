@@ -4,27 +4,14 @@ class Dispatcher
 {
 	private $className;
 	private $classFile;
-	public $action = "Home";
+	public $action;
 	public $id;
-	private $params = array();
+	private $params;
 
 	function __construct() {
+		$this->action = "Home";
+		$this->params = array();
 		$this->parseURL();
-	}
-
-	public function toArray()
-	{
-		$defaults = get_class_vars(get_class($this));
-		$return = array();
-		foreach ($defaults as $var => $val) 
-		{
-			if ($this->$var instanceof Model) {
-				$return[$var] = $this->$var->toArray();
-			} else {
-				$return[$var] = $this->$var;
-			}
-		}
-		return $return;
 	}
 
 	private function validateClass () {

@@ -16,13 +16,13 @@ ini_set('include_path',ini_get('include_path').";".getcwd()."/lib/".";".getcwd()
 define('LIB',getcwd() . "/lib");
 include_once LIB.'/Config.class.php';					//Settings and configuration
 include_once LIB.'/Dispatcher.class.php';				//URL routing and control
-include_once LIB.'/DB/SimpleDB.class.php';				//DB persistence
-include_once LIB.'/Dispatcher.class.php';					//
+include_once LIB.'/DB/SimpleDB.class.php';			//DB persistence
+include_once LIB.'/Dispatcher.class.php';				//
 include_once LIB.'/Action.class.php';					//Page controller class
 include_once LIB.'/Model.class.php';					//Parent data model class - ORM
 include_once LIB.'/Session.class.php';					//Session management
-include_once LIB.'/facebook/facebook.php';				//Facebook applications & pages
-include_once LIB.'/Paginate.class.php';					//List pagination class
+include_once LIB.'/facebook/facebook.php';			//Facebook applications & pages
+include_once LIB.'/Paginate.class.php';				//List pagination class
 
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -35,8 +35,12 @@ $CONFIG = new Config();
  * Load data models
  */
 function __autoload($class_name) {
-    include_once getcwd() . "/models/" . $class_name . '.class.php';
+	$file = getcwd() . "/models/" . $class_name . '.class.php';
+	if (file_exists($file) == false)
+    	return false;
+    include_once $file;
 }
+
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
  * 

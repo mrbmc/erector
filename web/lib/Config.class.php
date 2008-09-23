@@ -6,8 +6,8 @@ class Config
 	 *	SITE CONFIGURATION
 	 */
 	var $DOCROOT = '';
-	var $EMAIL_NAME = "Edelman Studios";
-	var $EMAIL_ADDRESS = "info@edelmanstudios.com";
+	var $EMAIL_NAME = "";
+	var $EMAIL_ADDRESS = "";
 	var $UPLOADS = "/uploads";
 	var $ENV_STAGING = "LOCALHOST";
 	var $ENV_PRODUCTION = "";

@@ -43,6 +43,7 @@ class Dispatcher
 		return $this->className;
 	}
 
+
 	private function parseURL () {
 		$this->params = split("/",$_SERVER['REQUEST_URI']);
 
@@ -55,6 +56,15 @@ class Dispatcher
 				$this->action = ucfirst(strtolower($this->params[1]));
 			$this->className = $this->action;
 			$this->id = $this->params[2];
+		}
+
+
+		// This allows you to override the dispatcher using URL params
+		if($_GET['action']!="") {
+			$this->action = trim($_GET['action']);
+		}
+		if($_GET['id']!="") {
+			$this->id = trim($_GET['id']);
 		}
 	}
 

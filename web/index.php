@@ -7,7 +7,7 @@
 define("DEBUG",true); // This boolean controls many useful debugging functions
 ini_set('display_errors', DEBUG);
 ini_set('error_reporting', (DEBUG ? (E_ERROR | E_WARNING | E_PARSE ) : E_ERROR));
-ini_set('include_path',ini_get('include_path').";".getcwd()."/lib/".";".getcwd()."/models/");
+//ini_set('include_path',ini_get('include_path').";".getcwd()."/lib/");
 
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -35,7 +35,7 @@ $CONFIG = new Config();
  * Load data models
  */
 function __autoload($class_name) {
-	$file = getcwd() . "/models/" . $class_name . '.class.php';
+	$file = LIB."/models/" . $class_name . '.class.php';
 	if (file_exists($file) == false)
     	return false;
     include_once $file;

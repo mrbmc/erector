@@ -3,8 +3,8 @@
 <html>
 <head>
 	<title>Erector: {if $title!=""}{$title}{else}{$DATA.title|upper}{/if}</title>
-    <style type="text/css" media="all">@import "./code/css/style.css";</style>
-	<script type="text/javascript" language="Javascript" src="./code/js/swfobject.js"></script>
+    <style type="text/css" media="all">@import "./css/style.css";</style>
+	<script type="text/javascript" language="Javascript" src="./js/swfobject.js"></script>
 </head>
 <body><a name="top" id="top"></a>
 

@@ -16,15 +16,15 @@ class Dispatcher
 
 	private function validateClass () {
 
-		if(!file_exists("actions/" . $this->className . ".php"))
+		if(!file_exists(LIB."/actions/" . $this->className . ".php"))
 			$this->className = "StaticPage";
 
-		include_once "actions/" . $this->className . ".php";
+		include_once LIB."/actions/" . $this->className . ".php";
 
 		if(!class_exists($this->className) || get_parent_class($this->className)=="Model")
 		{
 			$this->className = "StaticPage";
-			include_once "actions/" . $this->className . ".php";
+			include_once LIB."/actions/" . $this->className . ".php";
 		}
 
 		return $this->className;

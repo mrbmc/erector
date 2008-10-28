@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `asset` (
 DROP TABLE IF EXISTS `asset_link`;
 CREATE TABLE IF NOT EXISTS `asset_link` (
   `link_id` int(10) unsigned NOT NULL auto_increment,
-  `link_asset_id` int(10) unsigned NOT NULL,
+  `link_fk_asset_id` int(10) unsigned NOT NULL,
   `link_object_id` int(10) unsigned NOT NULL,
   `link_object_type` varchar(45) NOT NULL,
   PRIMARY KEY  (`link_id`)

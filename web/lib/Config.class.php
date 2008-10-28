@@ -29,7 +29,7 @@ class Config
 		'host' => "localhost",
 		'db' => "erectordb",
 		'user' => "erector",
-		'pass' => "EIS215"
+		'pass' => "asdzxc"
 	);
 	public function dsn () {
 		return (stristr($_SERVER["HTTP_HOST"],$this->ENV_STAGING)!==FALSE) ? $this->dsn_staging : $this->dsn_production;

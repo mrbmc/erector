@@ -2,4 +2,6 @@
 
 <h1>Hello, world!</h1>
 
+{include file='login_form.tpl'}
+
 {include file='footer.tpl'}

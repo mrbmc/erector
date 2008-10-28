@@ -198,12 +198,14 @@ class Presenter
 	}
 	
 	private function html () {
+		if(isset($this->action->redirect)) 
+			return header("Location: ".$this->action->redirect);
+
 		if(is_string($this->action->template))
 			$this->compile($this->action);
 
-		if(isset($GLOBALS['ACTION']->redirect)) 
-			return header("Location: ".$GLOBALS['ACTION']->redirect);
 		header("Content-type: text/html");
+
 		print $this->OUTPUT;
 	}
 	

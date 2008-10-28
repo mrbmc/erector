@@ -94,3 +94,11 @@ letter-spacing: 1px;
 #nav_news a { background: url(../../images/header/news_off.gif) no-repeat; }
 #nav_news a:hover  { background-image: url(../../images/header/news_on.gif); }
 
+
+
+/*
+ * FORMS
+ */
+label {
+display: block;
+}

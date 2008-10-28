@@ -3,8 +3,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Admin :: {$DATA.title|lower|capitalize}</title>
-	<style type="text/css" media="all" >@import "{$DOCROOT}/code/css/admin.css";</style>
-	<script type="text/javascript" src="{$DOCROOT}/code/js/jquery.js"></script>
+	<style type="text/css" media="all" >@import "{$DOCROOT}/css/admin.css";</style>
+	<script type="text/javascript" src="{$DOCROOT}/js/jquery.js"></script>
 </head>
 <body>
 <div id="wrapper">

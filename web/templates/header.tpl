@@ -11,6 +11,12 @@
 <div id="header">
 <ul id="globalnav">
 	<li id="nav_home"><a href="{$DOCROOT}/">HOME</a></li>
+{if $smarty.session.user_id > 0}
+	<li id="nav_logout"><a href="{$DOCROOT}/login/logout">Log out</a></li>
+{else}
+	<li id="nav_login"><a href="{$DOCROOT}/login">Log in</a></li>
+	<li id="nav_register"><a href="{$DOCROOT}/register">Register</a></li>
+{/if}
 </ul>
 </div>
 

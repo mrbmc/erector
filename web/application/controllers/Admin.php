@@ -11,7 +11,7 @@ class Admin extends Controller {
 		global $DISPATCH;
 		parent::__construct("Admin");
 		$this->title = "Admin area";
-		$this->template = 'admin/admin.tpl';
+		$this->view = 'admin/admin.tpl';
 		$this->id = $DISPATCH->id;
 		
 		echo $DISPATCH->control;
@@ -21,7 +21,7 @@ class Admin extends Controller {
 
 		
 		if($this->format == "xls")
-			$this->template = $this->$_GET['do'];
+			$this->view = $this->$_GET['do'];
 	
 	}
 

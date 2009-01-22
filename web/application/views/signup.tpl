@@ -18,7 +18,7 @@ $(document).ready(function() {
 			username: {
 				required: true,
 				minlength: 5,
-				remote: "/profile/unique_username/"
+				remote: "/profile/username_unique/"
 			},
 			password: {
 				required: true,
@@ -32,7 +32,7 @@ $(document).ready(function() {
 			email: {
 				required: true,
 				email: true,
-				remote: "/profile/unique_email/"
+				remote: "/profile/email_unique/"
 			},
 			captcha: {
 				required: true,

@@ -48,7 +48,7 @@ function __autoload($class_name) {
  * CONTROLLER
  * 
  * Load the appropriate controller class based on 
- * the URL. Will look for templates if no controller is 
+ * the URL. Will look for views if no controller is 
  * available.
  * 
  * This allows for static pages to be added with no
@@ -61,7 +61,7 @@ function __autoload($class_name) {
 global $DISPATCH;
 $DISPATCH = new Dispatcher();
 $CONTROLLER = $DISPATCH->go();
-Debugger::getInstance()->trace("controller",$CONTROLLER);
+//Debugger::trace("controller",$CONTROLLER);
 
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++

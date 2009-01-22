@@ -15,23 +15,33 @@ include_once LIB.'/captcha/CaptchaSecurityImages.php';		//CAPTCHA turing test
 
 class Presenter 
 {
-	var $smarty;
-	var $format;
-	var $OUTPUT;
 	private $controller;
+	private $view;
+	private $format;
+	private $smarty;
+	private $OUTPUT;
 
 	public function __construct () {
 		global $CONFIG;
 		$this->controller = $GLOBALS['CONTROLLER'];
-
 		$format = (isset($_GET['format'])) ? $_GET['format'] : $this->controller->format;
 		$this->$format();
 	}
 
+	private function validateTemplate () {
+		$this->view = $this->controller->view;
+		if(stristr($this->view,".tpl")===false)
+			$this->view .= ".tpl";
 
-	//Compile the templates
-	private function compile ($_controller) {
+		if(!file_exists(APP . "/views/" . $this->view))
+			$this->view = "./errors/404.tpl";
+	}
+
+
+	//Compile the views
+	private function compile () {
 		global $CONFIG;
+
 		$this->smarty = new Smarty();
 		$this->smarty->template_dir = APP.'/views';
 		$this->smarty->compile_dir = $this->smarty->cache_dir = LIB.'/SMARTY/cache';
@@ -40,10 +50,13 @@ class Presenter
 		$this->smarty->force_compile = DEBUG;
 		$this->smarty->debugging = DEBUG;
 
+		$this->validateTemplate();
+
 		$this->smarty->assign('DOCROOT', $CONFIG->DOCROOT);
-		$this->smarty->assign('DATA', $_controller->toArray());
-		$this->OUTPUT = $this->smarty->fetch($_controller->template);
+		$this->smarty->assign('DATA', $this->controller->toArray());
+		$this->OUTPUT = $this->smarty->fetch($this->view);
 	}
+
 
 
 	private function isNotAssocArray($arr)
@@ -55,16 +68,6 @@ class Presenter
 	        )
 	    );
 	}
-
-
-
-
-
-
-
-
-
-
 	private function objToXML ($obj) {
 		$str = "";
 		if(is_object($obj)) {
@@ -104,7 +107,6 @@ class Presenter
 		$this->OUTPUT = json_encode($GLOBALS['CONTROLLER']);
 		print $this->OUTPUT;
 	}
-
 
 	private function is_box($obj) {
 		return (is_array($obj) || is_object($obj));
@@ -154,8 +156,7 @@ class Presenter
 	}
 	
 	private function email () {
-		if(is_string($this->controller->template))
-			$this->compile($this->controller);
+		$this->compile();
 
 		$mail = new PHPMailer();
 		$mail->Host     = "localhost";
@@ -176,7 +177,7 @@ class Presenter
 		{
 		    $mail->AddAddress($toAddy);
 		    if(!$mail->Send())
-		        echo "There has been a mail error sending to " . $toAddy . "<br>";
+		        die("There has been a mail error sending to " . $toAddy);
 		    $mail->ClearAddresses();
 		    $mail->ClearAttachments();
 		}
@@ -190,8 +191,7 @@ class Presenter
 	}
 	
 	private function text () {
-		if(is_string($this->controller->template))
-			$this->compile($this->controller);
+		$this->compile();
 
 		header("Content-type: text/plain");
 		print $this->OUTPUT;
@@ -200,12 +200,8 @@ class Presenter
 	private function html () {
 		if(isset($this->controller->redirect)) 
 			return header("Location: ".$this->controller->redirect);
-
-		if(is_string($this->controller->template))
-			$this->compile($this->controller);
-
+		$this->compile();
 		header("Content-type: text/html");
-
 		print $this->OUTPUT;
 	}
 	

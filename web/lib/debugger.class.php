@@ -2,6 +2,7 @@
 
 class Debugger {
 	private static $instance;
+	private $benchmarks;
 
     private function __construct() {
     }
@@ -14,10 +15,12 @@ class Debugger {
 		return self::$instance;
     }
 
-	public function trace() {
+	public static function trace() {
 		if(!DEBUG)
 			return;
 
+		$key = null;
+		$val = null;
 		$args = func_get_args();
 		if(count($args)>1) {
 			$key = $args[0];
@@ -28,11 +31,12 @@ class Debugger {
 
 		if(gettype($val)=="array" || gettype($val)=="object")
 		{
+			if($key) echo $key . ":<br />";
 			echo '<textarea cols="80" rows="10">';
 			print_r($val);
 			echo "</textarea>";
 		} else {
-			if($key) echo $key . "=";
+			if($key) echo $key . ": ";
 			echo $val;
 		}
 		echo "<br />";

@@ -3,7 +3,7 @@
 class Controller {
 
 	public $title;
-	public $template;
+	public $view;
 	public $format = "html";
 	public $redirect;
 	public $user;
@@ -21,10 +21,7 @@ class Controller {
 		$this->session = Session::singleton();
 		$this->user = new User(array('id'=>$this->session->get('userid')));
 
-		if(file_exists(APP . "/views/" . strtolower($this->dispatch->controller) . ".tpl"))
-			$this->template = strtolower($this->dispatch->controller) . ".tpl";
-		else
-			$this->template = "./errors/404.tpl";
+		$this->view = strtolower($this->dispatch->controller);
 	}
 
 	public function toArray()

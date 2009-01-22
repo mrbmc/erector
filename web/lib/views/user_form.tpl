@@ -63,7 +63,7 @@ $(document).ready(function() {
 });
 /*]]>*/</script>{/literal}
  
-<form method="POST" action="/profile/save/" name="userForm" id="userForm">
+<form method="POST" action="/profile/update/" name="userForm" id="userForm">
 <input type="hidden" name="userid" value="{$DATA.user.id}" />
 
 <fieldset>

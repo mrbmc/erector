@@ -15,12 +15,9 @@ class Login extends Controller {
 
 	protected function login () {
 		$this->user = new User(array('username'=>$_REQUEST['username'],'password'=>$_REQUEST['password']));
-
-		if($this->user->status != 'pending')
+		$this->session->set('userstatus',$this->user->status);
+		if($this->user->status!='pending')
 			$this->session->set('userid',$this->user->id);
-//			$this->session->set('feedback','You must confirm your account before you can log in. Check your email for your confirmation code.');
-//		else
-		$this->session->set('feedback',null);
 	}
 
 	protected function logout () {

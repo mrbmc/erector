@@ -3,10 +3,15 @@
 <h1>Sign Up</h1>
 
 
+	<script type="text/javascript" src="/js/jquery.validation.js"></script> 
+	<script type="text/javascript" src="/js/passwordStrengthMeter.js"></script> 
 
-<script type="text/javascript" src="/js/jquery.validation.js"></script> 
 {literal}<script type="text/javascript">/*<![CDATA[*/
 $(document).ready(function() {
+	$("#password").keyup(function(){
+		$("#pw_status").html(passwordStrength($("#password").val(),""));
+	});
+
 	// validate signup form on keyup and submit
 	var validator = $("#userForm").validate({
 		rules: {
@@ -54,7 +59,6 @@ $(document).ready(function() {
 				minlength: "Please enter a valid email address",
 				remote: jQuery.format("{0} is already in use")
 			},
-			terms: "You must agree to the terms",
 			captcha: "Please enter the code correctly"
 		},
 		// the errorPlacement has to take the table layout into account
@@ -72,40 +76,34 @@ $(document).ready(function() {
 			label.html("&nbsp;").addClass("checked");
 		}
 	});
-
-	// propose username by combining first- and lastname
-	$("#username").focus(function() {
-		var first_name = $("#first_name").val();
-		var last_name = $("#last_name").val();
-		if(first_name && last_name && !this.value) {
-			this.value = first_name + "." + last_name;
-		}
-	});
 });
 /*]]>*/</script>{/literal}
  
-<form method="POST" action="/profile/create/" name="userForm" id="userForm">
+
+
+<form id="userForm" method="post" action="/profile/create/"> 
+
 <fieldset>
 <legend>User Info</legend>
 <div>
 	<label>Username</label>
-	<span><input type="text" name="username" /></span>
+	<span><input type="text" name="username" class="txtInput" /></span>
 	<span class="status"></span>
 </div>
 <div>
 	<label>Email</label>
-	<span><input type="text" name="email" /></span>
+	<span><input type="text" name="email" class="txtInput" /></span>
 	<span class="status"></span>
 </div>
 
 <div>
 	<label>Password</label>
-	<span><input type="password" id="password" name="password_new" /></span>
-	<span class="status"></span>
+	<span><input type="password" id="password" name="password" class="txtInput" /></span>
+	<span class="status" id="pw_status"></span>
 </div>
 <div>
 	<label>Confirm Password</label>
-	<span><input type="password" id="password_confirm" name="password_confirm" /></span>
+	<span><input type="password" id="password_confirm" name="password_confirm" class="txtInput" /></span>
 	<span class="status"></span>
 </div>
 </fieldset>
@@ -114,16 +112,16 @@ $(document).ready(function() {
 <fieldset>
 <div>
 	<label>Are you human</label>
-	<span><img src="/captcha/?width=150&height=50" /></span>
+	<span><img src="/captcha/?width=150&amp;height=50" alt="" /></span>
 	<div class="clear"></div>
 	<label>&nbsp;</label>
-	<span><input type="text" name="captcha" /></span>
+	<span><input type="text" name="captcha" class="txtInput" /></span>
 	<span class="status"></span> 
 
 </div>
 <div>
 	<label>Email updates</label> 
-	<span><input type="checkbox" id="newsletter" name="newsletter" value="true" checked="true" /></span> 
+	<span><input type="checkbox" id="newsletter" name="newsletter" value="true" checked="checked" /></span> 
 	<span class="status"></span> 
 </div>
 </fieldset>
@@ -131,7 +129,7 @@ $(document).ready(function() {
 <fieldset>
 <div>
 	<label></label>
-	<span><input alt="I accept. Create my account." class="green-continue-button" id="user_create_submit" name="commit" onclick="this.disabled=true,this.form.submit();" tabindex="7" type="submit" value="Create my account" /></span>
+	<span><input type="submit" class="button" id="user_create_submit" name="Submit" tabindex="7" value="Create my account" /></span>
 </div>
 </fieldset>
 

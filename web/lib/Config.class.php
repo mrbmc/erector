@@ -6,8 +6,8 @@ class Config
 	 *	SITE CONFIGURATION
 	 */
 	var $DOCROOT = '';
-	var $EMAIL_NAME = "";
-	var $EMAIL_ADDRESS = "";
+	var $EMAIL_NAME = "Erector";
+	var $EMAIL_ADDRESS = "admin@kageki.com";
 	var $UPLOADS = "/uploads";
 	var $ENV_STAGING = "LOCALHOST";
 	var $ENV_PRODUCTION = "";

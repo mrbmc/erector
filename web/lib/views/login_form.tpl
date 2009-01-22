@@ -1,6 +1,6 @@
 <div id="signin_form">
 
-{if $DATA.user.status eq "pending"}
+{if $smarty.session.userstatus eq "pending"}
 	<div>
 		<p>You must confirm your account before you can log in. Check your email for your confirmation code.
 	</div>

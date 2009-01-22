@@ -144,7 +144,7 @@ color: #F60;
 display: inline;
 }
 span.status span.checked {
-background:none;
+background: #0F0;
 margin: 0px;
 padding: 0px;
 }

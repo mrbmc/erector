@@ -18,12 +18,32 @@ class Profile extends Controller {
 				$this->redirect = "/profile";
 			break;
 			case "create":
-				echo "REGISTERING";
-//				$this->user->setFrom($_POST);
-//				$this->user->save();
-//				$this->session->set('feedback','Thank you for registering');
-//				$this->user = new User();
+				$u = new User(array("username"=>$_POST['username']));
+				if($u->id > 0) {
+					$this->session->set('feedback','Thank you for registering. An email has been sent to you with details on activating your account.');
+					$this->redirect = "/signup";
+				}
+
+				$this->user->setFrom($_POST);
+				$this->user->confirmation = substr(md5(uniqid(rand())),0,10);
+				$this->user->save();
+				
+				$this->format = "email";
+				$this->template = "emails/signup.tpl";
+				$this->EMAIL_LIST = array($this->user->email);
+				//$this->session->set('feedback','Thank you for registering. An email has been sent to you with details on activating your account.');
+				$this->user = new User();
 				$this->redirect = "/";
+			break;
+			case "confirm":
+				$this->user = new User(array("confirmation"=>$_GET['code']));
+				if($this->user->id > 0)
+				{
+					$this->user->status="member";
+					$this->session->set("userstatus",$this->user->status);
+					$this->user->save();
+					$this->redirect = $_REQUEST['referrer'] ? $_REQUEST['referrer'] : "/";
+				}
 			break;
 			case "unique_username":
 				$u = new User(array("username"=>$_GET['username']));

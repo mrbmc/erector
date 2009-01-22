@@ -17,8 +17,8 @@ class User extends Model {
 	public $zipcode;
 	public $phone;
 
-	function save ($matchcolumn,$data) {
-		return parent::save('id',$this->toArray());
+	function save ($_matchcolumn='id',$_data=null) {
+		return parent::save($_matchcolumn,$this->toArray());
 	}
 
 	function delete ($matchcolumn,$id) {

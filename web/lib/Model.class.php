@@ -36,8 +36,8 @@ abstract class Model {
 	}
 
 
-	public function save ($matchcolumn,$data) {
-		$this->sql = self::$db->build_sql(self::$table,$matchcolumn,$data);
+	public function save ($_matchcolumn='id',$_data=null) {
+		$this->sql = self::$db->build_sql(self::$table,$_matchcolumn,$_data);
 		return self::$db->query($this->sql);
 	}
 

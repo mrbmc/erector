@@ -165,7 +165,7 @@ class Presenter
 	    $mail->AltBody = strip_tags($this->OUTPUT);
 		$mail->Subject = $GLOBALS['CONTROLLER']->title;
 
-		$mail->From     = isset($GLOBALS['CONTROLLER']->EMAIL_FROM) ? $GLOBALS['CONTROLLER']->EMAIL_FROM : "no-reply@edelmanstudios.com";
+		$mail->From     = isset($GLOBALS['CONTROLLER']->EMAIL_FROM) ? $GLOBALS['CONTROLLER']->EMAIL_FROM : $GLOBALS['CONFIG']->EMAIL_ADDRESS;
 		$mail->FromName = isset($GLOBALS['CONTROLLER']->EMAIL_FROM) ? $GLOBALS['CONTROLLER']->EMAIL_FROM : $GLOBALS['CONFIG']->EMAIL_NAME;
 
 //		if(isset($_REQUEST['EMAIL'])) {

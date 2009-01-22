@@ -9,15 +9,20 @@ class Controller {
 	public $user;
 	public $session;
 
+	private $dispatch;
+	private $config;
+
 	function __construct($_title = "home")
 	{
-		global $CONFIG,$DISPATCH;
+		global $CONFIG;
+		$this->dispatch = Dispatcher::singleton();
+
 		$this->title = ($_title!="") ? $_title : $_REQUEST['act'];
 		$this->session = Session::singleton();
 		$this->user = new User(array('id'=>$this->session->get('userid')));
 
-		if(file_exists(LIB . "/views/" . strtolower($DISPATCH->controller) . ".tpl"))
-			$this->template = strtolower($DISPATCH->controller) . ".tpl";
+		if(file_exists(APP . "/views/" . strtolower($this->dispatch->controller) . ".tpl"))
+			$this->template = strtolower($this->dispatch->controller) . ".tpl";
 		else
 			$this->template = "./errors/404.tpl";
 	}

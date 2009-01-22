@@ -33,7 +33,7 @@ class Presenter
 	private function compile ($_controller) {
 		global $CONFIG;
 		$this->smarty = new Smarty();
-		$this->smarty->template_dir = LIB.'/views';
+		$this->smarty->template_dir = APP.'/views';
 		$this->smarty->compile_dir = $this->smarty->cache_dir = LIB.'/SMARTY/cache';
 		$this->smarty->config_dir = LIB.'/SMARTY/configs';
 		$this->smarty->caching = !DEBUG;

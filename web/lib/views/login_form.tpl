@@ -13,15 +13,15 @@
 	<input type="hidden" name="referer" value="{$smarty.server.HTTP_REFERER}" />
 	<div>
 		<label for="username">Username or email</label>
-		<br /><input type="text" id="username" name="username" class="text" />
+		<br /><input type="text" id="username" name="username" class="text" tabindex="1" />
 	</div>
 	<div>
 		<label for="password">Password</label>
-		<br /><input type="password" id="password" name="password" class="text" />
+		<br /><input type="password" id="password" name="password" class="text" tabindex="1" />
 		<br /><small><a href="/profile/pw_reminder">forgot your password?</a></small>
 	</div>
 	
-	<input type="submit" class="submit button" name="btnSubmit" value="Sign In" />
+	<input type="submit" class="submit button" name="btnSubmit" value="Sign In" tabindex="1" />
 	
 	<h3>Not a Member?</h3>
 	<div>

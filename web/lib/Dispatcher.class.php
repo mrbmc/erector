@@ -2,6 +2,8 @@
 
 class Dispatcher
 {
+	private static $instance;
+
 	private $className;
 	private $classFile;
 	public $controller;
@@ -9,16 +11,25 @@ class Dispatcher
 	public $id;
 	private $params;
 
-	function __construct() {
+	public function __construct() {
 		$this->controller = "Home";
 		$this->params = array();
 		$this->parseURL();
 	}
 
+	public static function singleton () {
+		if (!isset(self::$instance)) {
+			$className = __CLASS__;
+			self::$instance = new $className;
+		}
+		return self::$instance;
+	}
+
+
 	private function validateClass () {
 
-		if(file_exists(LIB."/controllers/" . $this->className . ".php"))
-			include_once (LIB."/controllers/" . $this->className . ".php");
+		if(file_exists(APP."/controllers/" . $this->className . ".php"))
+			include_once (APP."/controllers/" . $this->className . ".php");
 		else
 			include_once LIB."/Controller.class.php";
 

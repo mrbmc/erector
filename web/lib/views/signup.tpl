@@ -117,10 +117,9 @@ $(document).ready(function() {
 	<label>&nbsp;</label>
 	<span><input type="text" name="captcha" class="txtInput" /></span>
 	<span class="status"></span> 
-
 </div>
 <div>
-	<label>Email updates</label> 
+	<label>Can we email you updates?</label> 
 	<span><input type="checkbox" id="newsletter" name="newsletter" value="true" checked="checked" /></span> 
 	<span class="status"></span> 
 </div>

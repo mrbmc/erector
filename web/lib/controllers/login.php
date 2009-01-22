@@ -3,6 +3,7 @@
 class Login extends Controller {
 
 	function __construct () {
+		global $DISPATCH;
 		parent::__construct("Login");
 
 		if($_POST['do']=="logout")
@@ -23,6 +24,7 @@ class Login extends Controller {
 	protected function logout () {
 		$this->user = new User();
 		$this->session->set('userid',0);
+		$this->session->set('userstatus',$this->user->status);
 	}
 
 }

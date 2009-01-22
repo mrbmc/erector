@@ -14,14 +14,16 @@ ini_set('error_reporting', (DEBUG ? (E_ERROR | E_WARNING | E_PARSE ) : E_ERROR))
  * Load some classes
  */
 define('LIB',getcwd() . "/lib");
+define('APP',getcwd() . "/application");
 include_once LIB.'/Config.class.php';				//Settings and configuration
-include_once LIB.'/Dispatcher.class.php';			//URL routing and control
-include_once LIB.'/db/SimpleDB.class.php';			//DB persistence
 include_once LIB.'/Controller.class.php';			//Page controller class
 include_once LIB.'/Model.class.php';				//Parent data model class - ORM
+include_once LIB.'/Dispatcher.class.php';			//URL routing and control
+include_once LIB.'/db/SimpleDB.class.php';			//DB persistence
 include_once LIB.'/Session.class.php';				//Session management
 include_once LIB.'/facebook/facebook.php';			//Facebook applications & pages
 include_once LIB.'/Paginate.class.php';				//List pagination class
+include_once LIB.'/debugger.class.php';				//List pagination class
 
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -34,7 +36,7 @@ $CONFIG = new Config();
  * Load data models
  */
 function __autoload($class_name) {
-	$file = LIB."/models/" . $class_name . '.model.php';
+	$file = APP."/models/" . $class_name . '.model.php';
 	if (file_exists($file) == false)
     	return false;
     include_once $file;
@@ -59,6 +61,7 @@ function __autoload($class_name) {
 global $DISPATCH;
 $DISPATCH = new Dispatcher();
 $CONTROLLER = $DISPATCH->go();
+Debugger::getInstance()->trace("controller",$CONTROLLER);
 
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++

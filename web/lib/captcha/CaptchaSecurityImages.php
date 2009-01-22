@@ -27,7 +27,7 @@
 
 class CaptchaSecurityImages {
 
-	private $font = "./code/php/captcha/monofont.ttf";
+	private $font = "./lib/captcha/monofont.ttf";
 	private $possible = '23456789bcdfghjkmnpqrstvwxyz';
 	private $width;
 	private $height;
@@ -43,6 +43,7 @@ class CaptchaSecurityImages {
 
 		$this->width = $width;
 		$this->height = $height;
+		$this->length = 5;
 
 		$this->code = $_SESSION['captcha_code']!=""?$_SESSION['captcha_code']:$this->generateCode();
 		$_SESSION['captcha_code'] = $this->code;

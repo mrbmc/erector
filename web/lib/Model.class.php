@@ -67,7 +67,7 @@ abstract class Model {
 
 
 
-	protected function setFrom ($data) {
+	public function setFrom ($data) {
 		$valid = get_class_vars(get_class($this));
 		if (is_array($data) && count($data))
 			foreach ($valid as $var => $val) 

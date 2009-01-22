@@ -1,6 +1,6 @@
 <?php
 
-class Home extends Action {
+class Home extends Controller {
 
 	function __construct () {
 		parent::__construct("Home");

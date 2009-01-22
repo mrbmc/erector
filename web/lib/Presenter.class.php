@@ -2,9 +2,9 @@
 
 //Presentation formats
 include_once LIB.'/SMARTY/Smarty.class.php';				//HTML Template engine
-include_once LIB.'/Email/PHPMailer.class.php';				//Email sending class
-include_once LIB.'/DOMPDF/dompdf_config.inc.php';			//PDF Generation Class
-include_once LIB.'/captcha/CaptchaSecurityImages.php';	//CAPTCHA turing test
+include_once LIB.'/mailers/PHPMailer.class.php';			//Email sending class
+include_once LIB.'/dompdf/dompdf_config.inc.php';			//PDF Generation Class
+include_once LIB.'/captcha/CaptchaSecurityImages.php';		//CAPTCHA turing test
 
 /**
  * PRESENTER CLASS
@@ -18,31 +18,31 @@ class Presenter
 	var $smarty;
 	var $format;
 	var $OUTPUT;
-	private $action;
+	private $controller;
 
 	public function __construct () {
 		global $CONFIG;
-		$this->action = $GLOBALS['ACTION'];
+		$this->controller = $GLOBALS['CONTROLLER'];
 
-		$format = (isset($_GET['format'])) ? $_GET['format'] : $this->action->format;
+		$format = (isset($_GET['format'])) ? $_GET['format'] : $this->controller->format;
 		$this->$format();
 	}
 
 
 	//Compile the templates
-	private function compile ($_action) {
+	private function compile ($_controller) {
 		global $CONFIG;
 		$this->smarty = new Smarty();
-		$this->smarty->template_dir = './templates';
-		$this->smarty->compile_dir = $this->smarty->cache_dir = './lib/SMARTY/cache';
-		$this->smarty->config_dir = './lib/SMARTY/configs';
+		$this->smarty->template_dir = LIB.'/views';
+		$this->smarty->compile_dir = $this->smarty->cache_dir = LIB.'/SMARTY/cache';
+		$this->smarty->config_dir = LIB.'/SMARTY/configs';
 		$this->smarty->caching = !DEBUG;
 		$this->smarty->force_compile = DEBUG;
 		$this->smarty->debugging = DEBUG;
 
 		$this->smarty->assign('DOCROOT', $CONFIG->DOCROOT);
-		$this->smarty->assign('DATA', $_action->toArray());
-		$this->OUTPUT = $this->smarty->fetch($_action->template);
+		$this->smarty->assign('DATA', $_controller->toArray());
+		$this->OUTPUT = $this->smarty->fetch($_controller->template);
 	}
 
 
@@ -91,7 +91,7 @@ class Presenter
 	} 
 	private function xml () {
 		header("Content-type: text/xml");
-		$this->OUTPUT .= $this->objToXML($this->action);
+		$this->OUTPUT .= $this->objToXML($this->controller);
 		print $this->OUTPUT;
 	}
 
@@ -101,7 +101,7 @@ class Presenter
 
 	private function json () {
 		header("Content-type: text/plain");
-		$this->OUTPUT = json_encode($GLOBALS['ACTION']);
+		$this->OUTPUT = json_encode($GLOBALS['CONTROLLER']);
 		print $this->OUTPUT;
 	}
 
@@ -124,20 +124,20 @@ class Presenter
 		return $hdr."\n".$str;
 	} 
 	private function xls () {
-		$this->OUTPUT .= $this->objToCSV($this->action->data);
+		$this->OUTPUT .= $this->objToCSV($this->controller->data);
 
 		header("Pragma: public"); // required
 		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 		header("Cache-Control: private",false); // required for certain browsers 
 		header("Content-Type: application/vnd.ms-excel");
-		header("Content-Disposition: attachment; filename=\"".$this->action->title.".csv\";" );
+		header("Content-Disposition: attachment; filename=\"".$this->controller->title.".csv\";" );
 		header("Content-Transfer-Encoding: binary");
 
 		print $this->OUTPUT;
 	}
 	private function csv () { 
-		$this->OUTPUT .= $this->objToCSV($this->action->data);
+		$this->OUTPUT .= $this->objToCSV($this->controller->data);
 		header("Content-type: text/plain");
 		print $this->OUTPUT;
 	}
@@ -150,12 +150,12 @@ class Presenter
 		$dompdf->set_paper("letter","portrait");
 		$dompdf->load_html($this->OUTPUT);
 		$dompdf->render();
-		$dompdf->stream($this->action->title . ".pdf",array("Attachment"=>0));
+		$dompdf->stream($this->controller->title . ".pdf",array("Attachment"=>0));
 	}
 	
 	private function email () {
-		if(is_string($this->action->template))
-			$this->compile($this->action);
+		if(is_string($this->controller->template))
+			$this->compile($this->controller);
 
 		$mail = new PHPMailer();
 		$mail->Host     = "localhost";
@@ -163,16 +163,16 @@ class Presenter
 
 	    $mail->Body    = $this->OUTPUT;
 	    $mail->AltBody = strip_tags($this->OUTPUT);
-		$mail->Subject = $GLOBALS['ACTION']->title;
+		$mail->Subject = $GLOBALS['CONTROLLER']->title;
 
-		$mail->From     = isset($GLOBALS['ACTION']->EMAIL_FROM) ? $GLOBALS['ACTION']->EMAIL_FROM : "no-reply@edelmanstudios.com";
-		$mail->FromName = isset($GLOBALS['ACTION']->EMAIL_FROM) ? $GLOBALS['ACTION']->EMAIL_FROM : $GLOBALS['CONFIG']->EMAIL_NAME;
+		$mail->From     = isset($GLOBALS['CONTROLLER']->EMAIL_FROM) ? $GLOBALS['CONTROLLER']->EMAIL_FROM : "no-reply@edelmanstudios.com";
+		$mail->FromName = isset($GLOBALS['CONTROLLER']->EMAIL_FROM) ? $GLOBALS['CONTROLLER']->EMAIL_FROM : $GLOBALS['CONFIG']->EMAIL_NAME;
 
 //		if(isset($_REQUEST['EMAIL'])) {
-//			array_push($GLOBALS['ACTION']->EMAIL_LIST,array($_REQUEST['EMAIL']));
+//			array_push($GLOBALS['CONTROLLER']->EMAIL_LIST,array($_REQUEST['EMAIL']));
 //		}
 
-		foreach($GLOBALS['ACTION']->EMAIL_LIST as $toAddy)
+		foreach($GLOBALS['CONTROLLER']->EMAIL_LIST as $toAddy)
 		{
 		    $mail->AddAddress($toAddy);
 		    if(!$mail->Send())
@@ -181,8 +181,8 @@ class Presenter
 		    $mail->ClearAttachments();
 		}
 
-		if(isset($GLOBALS['ACTION']->redirect)) {
-			header("Location: ".$GLOBALS['ACTION']->redirect);
+		if(isset($GLOBALS['CONTROLLER']->redirect)) {
+			header("Location: ".$GLOBALS['CONTROLLER']->redirect);
 		} else {
 			header("Content-type: text/html");
 			print $this->OUTPUT;
@@ -190,19 +190,19 @@ class Presenter
 	}
 	
 	private function text () {
-		if(is_string($this->action->template))
-			$this->compile($this->action);
+		if(is_string($this->controller->template))
+			$this->compile($this->controller);
 
 		header("Content-type: text/plain");
 		print $this->OUTPUT;
 	}
 	
 	private function html () {
-		if(isset($this->action->redirect)) 
-			return header("Location: ".$this->action->redirect);
+		if(isset($this->controller->redirect)) 
+			return header("Location: ".$this->controller->redirect);
 
-		if(is_string($this->action->template))
-			$this->compile($this->action);
+		if(is_string($this->controller->template))
+			$this->compile($this->controller);
 
 		header("Content-type: text/html");
 

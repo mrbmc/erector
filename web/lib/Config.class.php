@@ -37,7 +37,7 @@ class Config
 
 
 	/**
-	 * FACBEOOK
+	 * FACEBOOK
 	 */
 	var $fb_apikey = '';
 	var $fb_apisecret = '';

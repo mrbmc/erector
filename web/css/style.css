@@ -1,6 +1,4 @@
-/******************************************
- * TYPOGRAPHY
- */
+/* ---- /TYPOGRAPHY ----*/
 body, div, span, p, td
 {
 font: 14px Arial, san-serif;
@@ -15,27 +13,26 @@ background: #C00;
 color: #FFF;
 }
 
-h1 {
-font: normal 24px Helvetica, Arial, san-serif;
+h1, h2, h3 {
+padding: 0px;
+margin: 0px 0px 10px 0px;
 letter-spacing: -0.1em;
+font: bold 16px helvetica, arial, san-serif;
+}
+h1 {
+font-size: 24px;
 }
 h2 {
-font: bold 20px helvetica, arial, san-serif;
-letter-spacing: -0.1em;
+font-size: 20px;
 }
-h3 {
-font: bold 16px helvetica, arial, san-serif;
-letter-spacing: -0.1em;
-}
+h3 {}
 
 #footer {
-	font-size: x-small;
-	font-weight: normal;
+font-size: x-small;
+font-weight: normal;
 }
 
-/******************************************
- * LAYOUT
- */
+/* ---- /LAYOUT ----*/
 body { 
 background: #EEE;
 margin: 0px;
@@ -47,15 +44,15 @@ padding: 0px;
 width: 740px;
 padding: 0px;
 margin: 10px auto;
-border-top: 5px solid #666;
+border-top: 5px solid #CCC;
 background: #FFF;
 }
 
 #body {
-width: 740px;
+width: 700px;
 margin: 10px auto;
-padding: 0px;
-border-top: 5px solid #666;
+padding: 20px;
+border-top: 5px solid #CCC;
 background: #FFF;
 }
 
@@ -64,13 +61,26 @@ background: #FFF;
 width: 740px;
 margin: 10px auto;
 padding: 0px;
-border-top: 5px solid #666;
+border-top: 5px solid #CCC;
 }
 
+#content {
+width: 450px;
+float: left;
+}
+#signin_form {
+	width: 240px;
+	float: right;
+	background: #EEE;
+	padding: 5px;
+}
 
-/******************************************
- * Navigation
- */
+#feedback {
+width: 50%;
+margin: 10px auto;
+color: #090;
+}
+/* ---- /NAVIGATION ----*/
 #globalnav {
 list-style-type: none;
 height: 15px;
@@ -96,9 +106,45 @@ letter-spacing: 1px;
 
 
 
-/*
- * FORMS
- */
-label {
+
+div.clear {
+clear: both;
+margin: 0px;
+padding: 0px;
+height: 0px;
+}
+
+
+/* ---- /USER FORMS ----*/
+fieldset {
+margin: 0px 0px 20px 0px;
+}
+fieldset div {
+margin: 0px 0px 20px 0px;
+}
+fieldset label {
+text-align: right;
+width: 200px;
 display: block;
+float: left;
+margin: 2px 5px 2px -5px;
+}
+input.text {
+font: bold 16px arial;
+color: #06C;
+}
+span.status span.error {
+width: 10px;
+overflow: visible;
+float: none;
+font-weight: bold;
+background: none;
+margin: 0px;
+color: #F60;
+display: inline;
+}
+span.status span.checked {
+background:none;
+margin: 0px;
+padding: 0px;
 }

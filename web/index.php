@@ -14,13 +14,12 @@ ini_set('error_reporting', (DEBUG ? (E_ERROR | E_WARNING | E_PARSE ) : E_ERROR))
  * Load some classes
  */
 define('LIB',getcwd() . "/lib");
-include_once LIB.'/Config.class.php';					//Settings and configuration
-include_once LIB.'/Dispatcher.class.php';				//URL routing and control
-include_once LIB.'/DB/SimpleDB.class.php';			//DB persistence
-include_once LIB.'/Dispatcher.class.php';				//
-include_once LIB.'/Action.class.php';					//Page controller class
-include_once LIB.'/Model.class.php';					//Parent data model class - ORM
-include_once LIB.'/Session.class.php';					//Session management
+include_once LIB.'/Config.class.php';				//Settings and configuration
+include_once LIB.'/Dispatcher.class.php';			//URL routing and control
+include_once LIB.'/db/SimpleDB.class.php';			//DB persistence
+include_once LIB.'/Controller.class.php';			//Page controller class
+include_once LIB.'/Model.class.php';				//Parent data model class - ORM
+include_once LIB.'/Session.class.php';				//Session management
 include_once LIB.'/facebook/facebook.php';			//Facebook applications & pages
 include_once LIB.'/Paginate.class.php';				//List pagination class
 
@@ -35,7 +34,7 @@ $CONFIG = new Config();
  * Load data models
  */
 function __autoload($class_name) {
-	$file = LIB."/models/" . $class_name . '.class.php';
+	$file = LIB."/models/" . $class_name . '.model.php';
 	if (file_exists($file) == false)
     	return false;
     include_once $file;
@@ -46,27 +45,27 @@ function __autoload($class_name) {
  * 
  * CONTROLLER
  * 
- * Load the appropriate page action class based on 
- * the URL. Will look for templates if no action is 
+ * Load the appropriate controller class based on 
+ * the URL. Will look for templates if no controller is 
  * available.
  * 
  * This allows for static pages to be added with no
- * action class. Not that you should... but you could.
+ * controller class. Not that you should... but you could.
  * 
  * TODO: replace with a dispatcher class that allows more
- * control over URL -> action mapping
+ * control over URL -> controller mapping
  * 
  */
 global $DISPATCH;
 $DISPATCH = new Dispatcher();
-$ACTION = $DISPATCH->go();
+$CONTROLLER = $DISPATCH->go();
 
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
  * 
  * VIEW
  * 
- * The Presenter class takes the data from the Action
+ * The Presenter class takes the data from the Controller
  * and generates the appropriate output. This allows 
  * full model / view separation.
  *  

@@ -1,6 +1,6 @@
 <?php
 
-abstract class Action {
+class Controller {
 
 	public $title;
 	public $template;
@@ -11,11 +11,15 @@ abstract class Action {
 
 	function __construct($_title = "home")
 	{
-		global $CONFIG;
+		global $CONFIG,$DISPATCH;
 		$this->title = ($_title!="") ? $_title : $_REQUEST['act'];
-		$this->template = ($_title!="") ? strtolower($_title).".tpl" : strtolower($_REQUEST['act']) . ".tpl";
 		$this->session = Session::singleton();
-		$this->user = new User(array('user_id'=>$this->session->get('user_id')));
+		$this->user = new User(array('id'=>$this->session->get('userid')));
+
+		if(file_exists(LIB . "/views/" . strtolower($DISPATCH->controller) . ".tpl"))
+			$this->template = strtolower($DISPATCH->controller) . ".tpl";
+		else
+			$this->template = "./errors/404.tpl";
 	}
 
 	public function toArray()

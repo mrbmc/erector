@@ -1,6 +1,6 @@
 <?php
 
-class Admin extends Action {
+class Admin extends Controller {
 
 	public $briefs;
 	public $users;
@@ -14,7 +14,7 @@ class Admin extends Action {
 		$this->template = 'admin/admin.tpl';
 		$this->id = $DISPATCH->id;
 		
-		echo $DISPATCH->action;
+		echo $DISPATCH->control;
 		if($_GET['do']!=""){
 			eval($this->$_GET['do']());
 		}
@@ -49,7 +49,7 @@ class Admin extends Action {
 					", users.username " .
 					"FROM pitches " .
 					"LEFT JOIN briefs ON briefs.briefid = pitches.briefid " .
-					"LEFT JOIN users ON users.userid = pitches.userid " .
+					"LEFT JOIN users ON user.id = pitches.userid " .
 					"WHERE pitches.userid = '".$this->id."'";
 			$this->pitches = Pitches::load($SQL);
 		}

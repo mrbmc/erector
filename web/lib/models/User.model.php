@@ -2,27 +2,27 @@
 
 class User extends Model {
 
-	public $user_id = 0;
-	public $user_status;
-	public $user_confirmation;
-	public $user_username;
-	public $user_password;
-	public $user_email;
-	public $user_first_name;
-	public $user_last_name;
-	public $user_address;
-	public $user_address_2;
-	public $user_city;
-	public $user_state;
-	public $user_zipcode;
-	public $user_phone;
+	public $id = 0;
+	public $status;
+	public $confirmation;
+	public $username;
+	public $password;
+	public $email;
+	public $first_name;
+	public $last_name;
+	public $address;
+	public $address_2;
+	public $city;
+	public $state;
+	public $zipcode;
+	public $phone;
 
 	function save ($matchcolumn,$data) {
-		return parent::save('user_id',$this->toArray());
+		return parent::save('id',$this->toArray());
 	}
 
 	function delete ($matchcolumn,$id) {
-		return parent::delete('user_id',$this->toArray());
+		return parent::delete('id',$this->toArray());
 	}
 
 

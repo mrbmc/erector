@@ -42,8 +42,8 @@ class Presenter
 	private function compile () {
 		$this->smarty = new Smarty();
 		$this->smarty->template_dir = APP.'/views';
-		$this->smarty->compile_dir = $this->smarty->cache_dir = LIB.'/SMARTY/cache';
-		$this->smarty->config_dir = LIB.'/SMARTY/configs';
+		$this->smarty->compile_dir = $this->smarty->cache_dir = LIB.'/smarty/cache';
+		$this->smarty->config_dir = LIB.'/smarty/configs';
 		$this->smarty->caching = !DEBUG;
 		$this->smarty->force_compile = DEBUG;
 		$this->smarty->debugging = DEBUG;

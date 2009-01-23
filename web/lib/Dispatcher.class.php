@@ -4,7 +4,7 @@ class Dispatcher
 {
 	public $controllerInstance;
 
-	public $controller = "Home";
+	public $controller = "index";
 	public $action;
 	public $id;
 

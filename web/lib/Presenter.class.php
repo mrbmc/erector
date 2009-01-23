@@ -1,7 +1,7 @@
 <?php
 
 //Presentation formats
-include_once LIB.'/SMARTY/Smarty.class.php';				//HTML Template engine
+include_once LIB.'/smarty/Smarty.class.php';				//HTML Template engine
 include_once LIB.'/mailers/PHPMailer.class.php';			//Email sending class
 include_once LIB.'/dompdf/dompdf_config.inc.php';			//PDF Generation Class
 include_once LIB.'/captcha/CaptchaSecurityImages.php';		//CAPTCHA turing test

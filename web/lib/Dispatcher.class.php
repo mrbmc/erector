@@ -46,7 +46,7 @@ class Dispatcher
 		if(file_exists(APP."/controllers/" . ucfirst(strtolower($this->controller)) . ".php"))
 			include_once (APP."/controllers/" . ucfirst(strtolower($this->controller)) . ".php");
 		else
-			include_once LIB."/controller.class.php";
+			include_once LIB."/Controller.class.php";
 		if(!class_exists($this->controller) || get_parent_class($this->controller)=="Model")
 			return "Controller";
 		return $this->controller;

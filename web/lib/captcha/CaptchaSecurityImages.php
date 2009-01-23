@@ -37,8 +37,7 @@ class CaptchaSecurityImages
 	private $image;
 
 	public function __construct($w=null,$h=null,$l=null) {
-		if(session_id()=="")
-			session_start();
+		Session::instance();
 
 		$this->width = $w ? $w : $this->width;
 		$this->height = $h ? $h : $this->height;

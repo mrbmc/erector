@@ -7,13 +7,11 @@ class Controller {
 	public $format = "html";
 	public $redirect;
 	public $user;
-	public $session;
 
 	function __construct($_title = "home")
 	{
 		$this->title = ($_title!="") ? $_title : $_REQUEST['act'];
-		$this->session = Session::singleton();
-		$this->user = new User(array('id'=>$this->session->get('userid')));
+		$this->user = new User(array('id'=>Session::instance()->get('userid')));
 		$this->view = strtolower(Dispatcher::instance()->controller);
 	}
 

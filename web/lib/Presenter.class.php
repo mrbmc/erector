@@ -22,7 +22,7 @@ class Presenter
 	private $OUTPUT;
 
 	public function __construct () {
-		$this->controller = $GLOBALS['CONTROLLER'];
+		$this->controller = Dispatcher::instance()->controllerInstance;
 		$format = (isset($_GET['format'])) ? $_GET['format'] : $this->controller->format;
 		$this->$format();
 	}
@@ -102,7 +102,7 @@ class Presenter
 
 	private function json () {
 		header("Content-type: text/plain");
-		$this->OUTPUT = json_encode($GLOBALS['CONTROLLER']);
+		$this->OUTPUT = json_encode($this->controller);
 		print $this->OUTPUT;
 	}
 
@@ -162,16 +162,16 @@ class Presenter
 
 	    $mail->Body    = $this->OUTPUT;
 	    $mail->AltBody = strip_tags($this->OUTPUT);
-		$mail->Subject = $GLOBALS['CONTROLLER']->title;
+		$mail->Subject = $this->controller->title;
 
-		$mail->From     = isset($GLOBALS['CONTROLLER']->EMAIL_FROM) ? $GLOBALS['CONTROLLER']->EMAIL_FROM : Config::instance()->EMAIL_ADDRESS;
-		$mail->FromName = isset($GLOBALS['CONTROLLER']->EMAIL_FROM) ? $GLOBALS['CONTROLLER']->EMAIL_FROM : Config::instance()->EMAIL_NAME;
+		$mail->From     = isset($this->controller->EMAIL_FROM) ? $this->controller->EMAIL_FROM : Config::instance()->EMAIL_ADDRESS;
+		$mail->FromName = isset($this->controller->EMAIL_FROM) ? $this->controller->EMAIL_FROM : Config::instance()->EMAIL_NAME;
 
 //		if(isset($_REQUEST['EMAIL'])) {
-//			array_push($GLOBALS['CONTROLLER']->EMAIL_LIST,array($_REQUEST['EMAIL']));
+//			array_push($this->controller->EMAIL_LIST,array($_REQUEST['EMAIL']));
 //		}
 
-		foreach($GLOBALS['CONTROLLER']->EMAIL_LIST as $toAddy)
+		foreach($this->controller->EMAIL_LIST as $toAddy)
 		{
 		    $mail->AddAddress($toAddy);
 		    if(!$mail->Send())
@@ -180,8 +180,8 @@ class Presenter
 		    $mail->ClearAttachments();
 		}
 
-		if(isset($GLOBALS['CONTROLLER']->redirect)) {
-			header("Location: ".$GLOBALS['CONTROLLER']->redirect);
+		if(isset($this->controller->redirect)) {
+			header("Location: ".$this->controller->redirect);
 		} else {
 			header("Content-type: text/html");
 			print $this->OUTPUT;

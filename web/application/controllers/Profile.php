@@ -26,14 +26,14 @@ class Profile extends Controller {
 		$this->user->confirmation = substr(md5(uniqid(rand())),0,10);
 		$this->user->save();
 		if($this->user->id > 0) {
-			$this->session->set('feedback','Thank you for registering. An email has been sent to you with details on activating your account.');
+			Session::instance()->set('feedback','Thank you for registering. An email has been sent to you with details on activating your account.');
 			$this->format = "email";
 			$this->view = "emails/signup.tpl";
 			$this->EMAIL_LIST = array($this->user->email);
 			$this->user = new User();
 			$this->redirect = "/";
 		} else {
-			$this->session->set('feedback','An error occured creating your account.');
+			Session::instance()->set('feedback','An error occured creating your account.');
 			$this->redirect = "/signup";
 		}
 
@@ -44,7 +44,7 @@ class Profile extends Controller {
 		{
 			$this->user->status="member";
 			$this->user->save();
-			$this->session->set("userstatus",$this->user->status);
+			Session::instance()->set("userstatus",$this->user->status);
 			$this->redirect = $_REQUEST['referrer'] ? $_REQUEST['referrer'] : "/";
 		}
 	}

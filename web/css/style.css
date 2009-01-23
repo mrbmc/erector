@@ -32,6 +32,9 @@ font-size: x-small;
 font-weight: normal;
 }
 
+img {
+	border: 0px;
+}
 /* ---- /LAYOUT ----*/
 body { 
 background: #EEE;

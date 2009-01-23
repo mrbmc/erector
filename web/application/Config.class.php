@@ -5,12 +5,12 @@ class Config
 	/**
 	 *	SITE CONFIGURATION
 	 */
-	var $DOCROOT = '';
 	var $EMAIL_NAME = "Erector";
 	var $EMAIL_ADDRESS = "admin@kageki.com";
-	var $UPLOADS = "/uploads";
+	var $UPLOADS_DIR = "/uploads";
 	var $ENV_STAGING = "LOCALHOST";
 	var $ENV_PRODUCTION = "";
+	var $DOCROOT = '';
 
 	/**
 	 * DATABASE CREDENTIALS
@@ -55,9 +55,8 @@ class Config
 	private function __construct() {
 		$this->DOCROOT = 'http://' . $_SERVER['HTTP_HOST'] . $this->DOCROOT;
 		date_default_timezone_set($this->timezone);
-		$this->UPLOADS = getcwd() . $this->UPLOADS;
+		$this->UPLOADS_DIR = getcwd() . $this->UPLOADS_DIR;
 	}
-
 	private static $_instance;
 	public static function instance () {
 		if (!isset(self::$_instance)) {

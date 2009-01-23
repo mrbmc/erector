@@ -2,7 +2,6 @@
 
 class Session 
 {
-	private static $instance;
 	public static $sessionID;
 
 	private function __construct()
@@ -11,12 +10,13 @@ class Session
 		self::$sessionID = session_id();
 	}
 
-	public static function singleton () {
-		if (!isset(self::$instance)) {
+	private static $_instance;
+	public static function instance () {
+		if (!isset(self::$_instance)) {
 			$className = __CLASS__;
-			self::$instance = new $className;
+			self::$_instance = new $className;
 		}
-		return self::$instance;
+		return self::$_instance;
 	}
 
 	public function destroy ()

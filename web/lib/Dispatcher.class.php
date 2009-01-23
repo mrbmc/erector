@@ -2,7 +2,7 @@
 
 class Dispatcher
 {
-	public $_controller;
+	public $controllerInstance;
 
 	public $controller = "Home";
 	public $action;
@@ -43,22 +43,19 @@ class Dispatcher
 	}
 
 	private function validateClass () {
-
-		if(file_exists(APP."/controllers/" . strtolower($this->controller) . ".php"))
-			include_once (APP."/controllers/" . strtolower($this->controller) . ".php");
+		if(file_exists(APP."/controllers/" . ucfirst(strtolower($this->controller)) . ".php"))
+			include_once (APP."/controllers/" . ucfirst(strtolower($this->controller)) . ".php");
 		else
 			include_once LIB."/controller.class.php";
-
 		if(!class_exists($this->controller) || get_parent_class($this->controller)=="Model")
 			return "Controller";
-
 		return $this->controller;
 	}
 
-	public function getController () {
+	public function dispatch () {
 		$this->parseURL();
 		$c = $this->validateClass();
-		return new $c();
+		$this->controllerInstance = new $c();
 	}
 }
 

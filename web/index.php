@@ -23,7 +23,7 @@ include_once LIB.'/db/SimpleDB.class.php';			//DB persistence
 include_once LIB.'/Session.class.php';				//Session management
 include_once LIB.'/facebook/facebook.php';			//Facebook applications & pages
 include_once LIB.'/Paginate.class.php';				//List pagination class
-include_once LIB.'/debugger.class.php';				//List pagination class
+include_once LIB.'/Debugger.class.php';				//List pagination class
 include_once LIB.'/Presenter.class.php';
 
 
@@ -59,7 +59,7 @@ function __autoload($class_name) {
  * control over URL -> controller mapping
  * 
  */
-$CONTROLLER = Dispatcher::instance()->getController();
+Dispatcher::instance()->dispatch();
 
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++

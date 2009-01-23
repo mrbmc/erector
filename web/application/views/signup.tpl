@@ -77,6 +77,9 @@ $(document).ready(function() {
 		}
 	});
 });
+
+var newCaptchaImageURL = '<img src="/captcha/renew" width="150" height="50" />';
+
 /*]]>*/</script>{/literal}
  
 
@@ -112,11 +115,18 @@ $(document).ready(function() {
 <fieldset>
 <div>
 	<label>Are you human</label>
-	<span><img src="/captcha" alt="captcha" width="150" height="50" id="captchaImage" /></span>
+
+	<span>
+	<span id="captchaImage"><img src="/captcha" alt="captcha" width="150" height="50" /></span>
+	<small><a href="javascript:void(0);" onClick="$('#captchaImage').html(newCaptchaImageURL);" /><img src="/images/captcha_renew.gif" alt="Get a new code" /></a></small>
+	</span>
+
 	<div class="clear"></div>
+
 	<label>&nbsp;</label>
 	<span><input type="text" name="captcha" class="txtInput" /></span>
 	<span class="status"></span> 
+
 </div>
 <div>
 	<label>Can we email you updates?</label> 

@@ -20,9 +20,9 @@ class Captcha extends Controller
 	protected function renew()
 	{
 		$this->captcha->code = $this->captcha->generateCode();
-		$_SESSION['captcha_code'] = $this->captcha->code;
-		echo $this->captcha->code;
-		exit;
+		Session::instance()->set('captcha_code',$this->captcha->code);
+		$this->redirect = "/captcha";
+		//echo Session::instance()->get('captcha_code');
 	}
 }
 ?>

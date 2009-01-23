@@ -3,16 +3,17 @@
 class Profile extends Controller {
 
 	function __construct () {
-		global $DISPATCH;
 		parent::__construct("Profile");
-
-		if(isset($DISPATCH->action)) {
-			$method = $DISPATCH->action;
-			$this->$method();
-		}
+		$this->action();
 	}
 
-	private function update () {
+	protected function update () {
+		if($this->user->id<=0)
+		{
+			$this->redirect = "/profile";
+			return;
+		}
+
 		$this->user->setFrom($_POST);
 		if($_REQUEST['password_old'] == $this->user->password)
 			$this->user->password = $_POST['password_new'];
@@ -20,7 +21,7 @@ class Profile extends Controller {
 		$this->redirect = "/profile";
 	}
 
-	private function create () {
+	protected function create () {
 		$this->user->setFrom($_POST);
 		$this->user->confirmation = substr(md5(uniqid(rand())),0,10);
 		$this->user->save();
@@ -37,7 +38,7 @@ class Profile extends Controller {
 		}
 
 	}
-	private function confirm () {
+	protected function confirm () {
 		$this->user = new User(array("confirmation"=>$_GET['code']));
 		if($this->user->id > 0)
 		{
@@ -48,38 +49,34 @@ class Profile extends Controller {
 		}
 	}
 
-	private function username_exists () {
+	protected function username_exists () {
 		$u = new User(array("username"=>$_GET['username']));
 		echo ($u->id > 0) ? "true" : "false";
 		exit;
 	}
-	private function username_unique () {
+	protected function username_unique () {
 		$u = new User(array("username"=>$_GET['username']));
 		echo ($u->id <= 0) ? "true" : "false";
 		exit;
 	}
-	private function email_exists () {
+	protected function email_exists () {
 		$u = new User(array("email"=>$_GET['email']));
 		echo ($u->id > 0) ? "true" : "false";
 		exit;
 	}
-	private function email_unique () {
+	protected function email_unique () {
 		$u = new User(array("email"=>$_GET['email']));
 		echo ($u->id <= 0) ? "true" : "false";
 		exit;
 	}
-	private function captcha () {
-		echo ($_GET['captcha']==$_SESSION['captcha_code']) ? "true" : "false";
-		exit;
-	}
-	private function validate_pw () {
+	protected function validate_pw () {
 		echo ($_REQUEST['password_old'] == $this->user->password) ? "true" : "false";
 		exit;
 	}
-	private function pw_reminder () {
+	protected function pw_reminder () {
 		$this->view = 'pw_reminder';
 	}
-	private function send_pw() {
+	protected function send_pw() {
 
 		if($_POST['username'])
 			$this->user = new User(array("username"=>$_POST['username']));

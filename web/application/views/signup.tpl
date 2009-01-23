@@ -36,7 +36,7 @@ $(document).ready(function() {
 			},
 			captcha: {
 				required: true,
-				remote: "/profile/captcha/"
+				remote: "/captcha/validate"
 			}
 		},
 		messages: {
@@ -112,7 +112,7 @@ $(document).ready(function() {
 <fieldset>
 <div>
 	<label>Are you human</label>
-	<span><img src="/captcha/?width=150&amp;height=50" alt="" /></span>
+	<span><img src="/captcha" alt="captcha" width="150" height="50" id="captchaImage" /></span>
 	<div class="clear"></div>
 	<label>&nbsp;</label>
 	<span><input type="text" name="captcha" class="txtInput" /></span>

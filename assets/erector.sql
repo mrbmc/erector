@@ -46,4 +46,4 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY  (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
-INSERT INTO `user` (`user_id`, `user_status`, `user_username`, `user_password`, `user_email`, `user_phone`, `user_address`, `user_address_2`, `user_city`, `user_state`, `user_zipcode`, `user_first_name`, `user_last_name`, `user_confirmation`) VALUES (1, 'admin', 'admin', 'studios', 'info@edelmanstudios.com', '212-299-4036', '215 Park Ave. South', '16th Floor', 'New York', 'NY', '10003', 'Edelman', 'Studios', NULL);
+INSERT INTO `user` (`user_id`, `user_status`, `user_username`, `user_password`, `user_email`, `user_phone`, `user_address`, `user_address_2`, `user_city`, `user_state`, `user_zipcode`, `user_first_name`, `user_last_name`, `user_confirmation`) VALUES (1, 'admin', 'admin', '12345', 'info@exammple.com', '', '', '', '', '', '', '', '', NULL);

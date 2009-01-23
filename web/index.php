@@ -4,7 +4,7 @@
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
  * DEBUGGING AND ERROR REPORTING
  */
-define("DEBUG",true); // This boolean controls many useful debugging functions
+define("DEBUG",1); // This boolean controls many useful debugging functions
 ini_set('display_errors', DEBUG);
 ini_set('error_reporting', (DEBUG ? (E_ERROR | E_WARNING | E_PARSE ) : E_ERROR));
 //ini_set('include_path',ini_get('include_path').";".getcwd()."/lib/");
@@ -15,7 +15,7 @@ ini_set('error_reporting', (DEBUG ? (E_ERROR | E_WARNING | E_PARSE ) : E_ERROR))
  */
 define('LIB',getcwd() . "/lib");
 define('APP',getcwd() . "/application");
-include_once LIB.'/Config.class.php';				//Settings and configuration
+include_once APP.'/Config.class.php';				//Settings and configuration
 include_once LIB.'/Controller.class.php';			//Page controller class
 include_once LIB.'/Model.class.php';				//Parent data model class - ORM
 include_once LIB.'/Dispatcher.class.php';			//URL routing and control
@@ -24,6 +24,7 @@ include_once LIB.'/Session.class.php';				//Session management
 include_once LIB.'/facebook/facebook.php';			//Facebook applications & pages
 include_once LIB.'/Paginate.class.php';				//List pagination class
 include_once LIB.'/debugger.class.php';				//List pagination class
+include_once LIB.'/Presenter.class.php';
 
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -58,10 +59,7 @@ function __autoload($class_name) {
  * control over URL -> controller mapping
  * 
  */
-global $DISPATCH;
-$DISPATCH = new Dispatcher();
-$CONTROLLER = $DISPATCH->go();
-//Debugger::trace("controller",$CONTROLLER);
+$CONTROLLER = Dispatcher::instance()->getController();
 
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -73,7 +71,6 @@ $CONTROLLER = $DISPATCH->go();
  * full model / view separation.
  *  
  */
-include_once LIB.'/Presenter.class.php';
 $view = new Presenter();
 
 exit();

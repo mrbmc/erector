@@ -2,80 +2,63 @@
 
 class Dispatcher
 {
-	private static $instance;
+	private static $_instance;
+	public $_controller;
 
-	private $className;
-	private $classFile;
-	public $controller;
+	public $controller = "Home";
 	public $action;
 	public $id;
-	private $params;
 
-	public function __construct() {
-		$this->controller = "Home";
-		$this->params = array();
-		$this->parseURL();
-	}
+	private function __construct() {}
 
-	public static function singleton () {
-		if (!isset(self::$instance)) {
-			$className = __CLASS__;
-			self::$instance = new $className;
+	public static function instance () {
+		if (!isset(self::$_instance)) {
+			$_classname = __CLASS__;
+			self::$_instance = new $_classname;
 		}
-		return self::$instance;
+		return self::$_instance;
 	}
-
-
-	private function validateClass () {
-
-		if(file_exists(APP."/controllers/" . $this->className . ".php"))
-			include_once (APP."/controllers/" . $this->className . ".php");
-		else
-			include_once LIB."/Controller.class.php";
-
-		if(!class_exists($this->className) || get_parent_class($this->className)=="Model")
-			$this->className = "Controller";
-
-		return $this->className;
-	}
-
 
 	private function parseURL () {
-		$this->params = split("/",$_SERVER['REQUEST_URI']);
-
-		if($this->params[1] == "admin"){
-			$this->controller = $this->params[2];
-			$this->className = "Admin";
-			$this->id = $this->params[3];
-		} else {
-			if($this->params[1]!="")
-				$this->controller = ucfirst(strtolower($this->params[1]));
-			$this->className = $this->controller;
-
-			if(!is_numeric($this->params[2]))
-				$this->action = $this->params[2];
-			else
-				$this->id = $this->params[2];
-
-			if(is_numeric($this->params[3]) && $this->params[3]!=$this->id)
-				$this->id = $this->params[3];
-
+		if($_SERVER["REQUEST_URI"]=="/")
+			return;
+		$args = split("/",$_SERVER['REDIRECT_URL']);
+		for($i=1,$x=count($args);$i<$x;$i++)
+		{
+			if(is_numeric($args[$i]))
+				$this->id = $args[$i];
+			else if($i<=1)
+				$this->controller = $args[$i];
+			else if(!$this->action)
+				$this->action = $args[$i];
 		}
 
-
-		// Override the dispatcher URL structure with params
-		if($_GET['controller']!="")
+		// Override the neat URL structure with key=val pairs
+		if(isset($_GET['controller']))
 			$this->controller = trim($_GET['controller']);
-		if($_GET['do']!="")
+		if(isset($_GET['do']))
 			$this->action = trim($_GET['do']);
-		if($_GET['id']!="")
+		if(isset($_GET['id']))
 			$this->id = trim($_GET['id']);
 	}
 
+	private function validateClass () {
 
-	public function go () {
-		$classname = $this->validateClass();
-		return new $classname();
+		if(file_exists(APP."/controllers/" . strtolower($this->controller) . ".php"))
+			include_once (APP."/controllers/" . strtolower($this->controller) . ".php");
+		else
+			include_once LIB."/controller.class.php";
+
+		if(!class_exists($this->controller) || get_parent_class($this->controller)=="Model")
+			return "Controller";
+
+		return $this->controller;
+	}
+
+	public function getController () {
+		$this->parseURL();
+		$c = $this->validateClass();
+		return new $c();
 	}
 }
 

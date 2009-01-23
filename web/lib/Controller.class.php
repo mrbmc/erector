@@ -9,19 +9,24 @@ class Controller {
 	public $user;
 	public $session;
 
-	private $dispatch;
-	private $config;
-
 	function __construct($_title = "home")
 	{
-		global $CONFIG;
-		$this->dispatch = Dispatcher::singleton();
-
 		$this->title = ($_title!="") ? $_title : $_REQUEST['act'];
 		$this->session = Session::singleton();
 		$this->user = new User(array('id'=>$this->session->get('userid')));
+		$this->view = strtolower(Dispatcher::instance()->controller);
+	}
 
-		$this->view = strtolower($this->dispatch->controller);
+	protected function action () {
+		$method = Dispatcher::instance()->action;
+		//Debugger::trace("method",$method);
+		if(method_exists($this,$method)){
+			$this->$method();
+		} else if($method) {
+			$this->view = "errors/404";
+		} else if(method_exists($this,"index")) {
+			$this->index();
+		}
 	}
 
 	public function toArray()

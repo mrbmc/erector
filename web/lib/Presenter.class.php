@@ -35,10 +35,11 @@ class Presenter
 
 		if(!file_exists(APP . "/views/" . $this->view))
 			$this->view = "./errors/404.tpl";
+		//Debugger::trace($this->view);
 	}
 
 
-	//Compile the views
+	//Compile the view
 	private function compile () {
 		global $CONFIG;
 

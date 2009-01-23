@@ -13,7 +13,10 @@ and the need to kludge your way through some projects. It uses principles of
 object oriented design in order to support a dynamic feature set and 
 user-interface changes quickly and cleanly.
 
-Clean? Yes. Short functions. Small classes. Easy to read. East to fix.
+Short functions. 
+Small classes. 
+Easy to read. 
+Easy to fix.
 
 
 LATEST VERSION

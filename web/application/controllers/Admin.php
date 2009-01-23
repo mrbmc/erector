@@ -14,12 +14,11 @@ class Admin extends Controller {
 		$this->view = 'admin/admin.tpl';
 		$this->id = $DISPATCH->id;
 		
-		echo $DISPATCH->control;
+		echo $DISPATCH->action;
 		if($_GET['do']!=""){
 			eval($this->$_GET['do']());
 		}
 
-		
 		if($this->format == "xls")
 			$this->view = $this->$_GET['do'];
 	

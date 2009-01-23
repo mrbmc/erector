@@ -91,47 +91,6 @@ DROP TABLE IF EXISTS `assets`;
 ) */;
 
 --
--- Table structure for table `dives`
---
-
-DROP TABLE IF EXISTS `dives`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `dives` (
-  `id` int(11) NOT NULL auto_increment,
-  `fk_user_id` int(11) default NULL,
-  `dateline` date default NULL,
-  `title` varchar(255) default NULL,
-  `location` varchar(255) default NULL,
-  `bottomtime` int(11) default NULL,
-  `decotime` int(11) default NULL,
-  `maxdepth` int(11) default NULL,
-  `time_start` datetime default NULL,
-  `time_end` datetime default NULL,
-  `air_start` int(11) default NULL,
-  `air_end` int(11) default NULL,
-  `weight` int(11) default NULL,
-  `temperature` int(11) default NULL,
-  `current` int(11) default NULL,
-  `visibility` int(11) default NULL,
-  `description` text,
-  `created_at` datetime default NULL,
-  `updated_at` datetime default NULL,
-  PRIMARY KEY  (`id`),
-  KEY `index_dives_on_user_id` USING BTREE (`fk_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
-SET character_set_client = @saved_cs_client;
-
---
--- Dumping data for table `dives`
---
-
-LOCK TABLES `dives` WRITE;
-/*!40000 ALTER TABLE `dives` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dives` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `user`
 --
 
@@ -156,7 +115,7 @@ CREATE TABLE `user` (
   `last_name` varchar(100) default NULL,
   `confirmation` varchar(50) default NULL,
   PRIMARY KEY  USING BTREE (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --

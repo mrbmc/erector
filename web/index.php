@@ -30,7 +30,7 @@ include_once LIB.'/Presenter.class.php';
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
  * Initialize configuration and settings
  */
-$CONFIG = new Config();
+Config::instance();
 
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++

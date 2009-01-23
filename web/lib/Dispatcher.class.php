@@ -2,7 +2,6 @@
 
 class Dispatcher
 {
-	private static $_instance;
 	public $_controller;
 
 	public $controller = "Home";
@@ -11,6 +10,7 @@ class Dispatcher
 
 	private function __construct() {}
 
+	private static $_instance;
 	public static function instance () {
 		if (!isset(self::$_instance)) {
 			$_classname = __CLASS__;

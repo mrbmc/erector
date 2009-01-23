@@ -9,9 +9,8 @@ abstract class Model {
 
 	function __construct($args=null)
 	{
-		global $CONFIG;
 		$this->s = Session::singleton();
-		self::$db = new SimpleDB($CONFIG->dsn());
+		self::$db = new SimpleDB(Config::instance()->dsn());
 		self::$table = strtolower(get_class($this));
 
 		if($args!==null) {

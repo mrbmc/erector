@@ -27,7 +27,7 @@ class Asset extends Model
 	public function __construct ($element) {
 		parent::__construct();
 		$this->fileElementName = $element;
-		$this->uploads_dir = $GLOBALS['CONFIG']->UPLOADS;
+		$this->uploads_dir = Config::isntance()->UPLOADS;
 		if($this->upload())
 			return $this->save();
 		else 

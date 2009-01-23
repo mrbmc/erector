@@ -22,7 +22,6 @@ class Presenter
 	private $OUTPUT;
 
 	public function __construct () {
-		global $CONFIG;
 		$this->controller = $GLOBALS['CONTROLLER'];
 		$format = (isset($_GET['format'])) ? $_GET['format'] : $this->controller->format;
 		$this->$format();
@@ -41,8 +40,6 @@ class Presenter
 
 	//Compile the view
 	private function compile () {
-		global $CONFIG;
-
 		$this->smarty = new Smarty();
 		$this->smarty->template_dir = APP.'/views';
 		$this->smarty->compile_dir = $this->smarty->cache_dir = LIB.'/SMARTY/cache';
@@ -53,7 +50,7 @@ class Presenter
 
 		$this->validateTemplate();
 
-		$this->smarty->assign('DOCROOT', $CONFIG->DOCROOT);
+		$this->smarty->assign('DOCROOT', Config::instance()->DOCROOT);
 		$this->smarty->assign('DATA', $this->controller->toArray());
 		$this->OUTPUT = $this->smarty->fetch($this->view);
 	}
@@ -167,8 +164,8 @@ class Presenter
 	    $mail->AltBody = strip_tags($this->OUTPUT);
 		$mail->Subject = $GLOBALS['CONTROLLER']->title;
 
-		$mail->From     = isset($GLOBALS['CONTROLLER']->EMAIL_FROM) ? $GLOBALS['CONTROLLER']->EMAIL_FROM : $GLOBALS['CONFIG']->EMAIL_ADDRESS;
-		$mail->FromName = isset($GLOBALS['CONTROLLER']->EMAIL_FROM) ? $GLOBALS['CONTROLLER']->EMAIL_FROM : $GLOBALS['CONFIG']->EMAIL_NAME;
+		$mail->From     = isset($GLOBALS['CONTROLLER']->EMAIL_FROM) ? $GLOBALS['CONTROLLER']->EMAIL_FROM : Config::instance()->EMAIL_ADDRESS;
+		$mail->FromName = isset($GLOBALS['CONTROLLER']->EMAIL_FROM) ? $GLOBALS['CONTROLLER']->EMAIL_FROM : Config::instance()->EMAIL_NAME;
 
 //		if(isset($_REQUEST['EMAIL'])) {
 //			array_push($GLOBALS['CONTROLLER']->EMAIL_LIST,array($_REQUEST['EMAIL']));

@@ -1,24 +1,23 @@
 <?php
 
+include_once LIB.'/db/SimpleDB.class.php';			//DB persistence
+
 abstract class Model {
 
 	protected $sql;
 	protected static $db;
 	protected static $table;
-	private $data = array();
 
 	function __construct($args=null)
 	{
 		self::$db = new SimpleDB(Config::instance()->dsn());
 		self::$table = strtolower(get_class($this));
 
-		if($args!==null) {
-			$sql = "WHERE 1 ";
+		if(is_array($args)) {
+			$sql = "SELECT * FROM ".self::$table." WHERE 1 ";
 			foreach($args as $k=>$v)
-				$sql .= "AND ".$k."='".$v."' ";
-			$_data = self::load($sql);
-			if(isset($_data[0]))
-				self::setFrom($_data[0]);
+				$sql .= "AND ".$k." LIKE '".$v."' ";
+			self::set(self::$db->query_first($sql));
 		}
 	}
 
@@ -28,7 +27,10 @@ abstract class Model {
 		$result = self::$db->query($sql);
 		while($row = self::$db->fetch_array($result))
 		{
-			array_push($return, $row);
+			$classname = ucfirst(self::$table);
+			$obj = new $classname();
+			$obj->set($row);
+			array_push($return, $obj);
 		}
 		return $return;
 	}
@@ -36,7 +38,10 @@ abstract class Model {
 
 	public function save ($_matchcolumn='id',$_data=null) {
 		$this->sql = self::$db->build_sql(self::$table,$_matchcolumn,$_data);
-		return self::$db->query($this->sql);
+		$saved = self::$db->query($this->sql); 
+		if(stristr($this->sql,"INSERT")!==false && $saved==true)
+			$this->id = self::$db->insert_id();
+		return $saved;
 	}
 
 
@@ -46,53 +51,17 @@ abstract class Model {
 	}
 
 
-	public function __set($name, $value) {
-		$this->data[$name] = $value;
-	}
-
-	public function __get($name) {
-		if (array_key_exists($name, $this->data))
-		    return $this->data[$name];
-	
-		$trace = debug_backtrace();
-		trigger_error(
-		'Undefined property: ' . $name .
-		' in ' . $trace[0]['file'] .
-		' on line ' . $trace[0]['line'],
-		E_USER_NOTICE);
-		return null;
-	}
-
-
-
-	public function setFrom ($data) {
-		$valid = get_class_vars(get_class($this));
-		if (is_array($data) && count($data))
-			foreach ($valid as $var => $val) 
-				if (isset($data[$var]))
-					$this->$var = $data[$var];
-		elseif (is_object($data))
-			foreach ($valid as $var => $val) 
-				if (isset($data->$var))
-					$this->$var = $data->$var;
+	public function set ($_data) {
+		$class_vars = get_class_vars(get_class($this));
+		if (is_array($_data) && count($_data))
+			foreach ($class_vars as $key => $val) 
+				if (isset($_data[$key]) && property_exists($this,$key))
+					$this->$key = $_data[$key];
+		elseif (is_object($_data))
+			foreach ($class_vars as $key => $val) 
+				if (isset($_data->$key) && property_exists($this,$key))
+					$this->$key = $_data->$key;
 		return $this;
-	}
-
-
-	public function toArray()
-	{
-		//$defaults = $this->me->getDefaultProperties();
-		$defaults = get_class_vars(get_class($this));
-		$return = array();
-		foreach ($defaults as $var => $val) 
-		{
-			if ($this->$var instanceof Model) {
-				$return[$var] = $this->$var->toArray();
-			} else {
-				$return[$var] = $this->$var;
-			}
-		}
-		return $return;
 	}
 
 }

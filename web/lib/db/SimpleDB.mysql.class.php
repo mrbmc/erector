@@ -24,12 +24,6 @@ class SimpleDB_child
 		return $result;
 	}
 
-	function fetch_array($query_id, $type = MYSQL_ASSOC)
-	{
-		// retrieve row
-		return mysql_fetch_array($query_id, $type);
-	}
-
 	function query_first($query_string, $type = MYSQL_ASSOC)
 	{
 		// does a query and returns first row
@@ -39,12 +33,18 @@ class SimpleDB_child
 		return $returnarray;
 	}
 
+	function fetch_array($query_id, $type = MYSQL_ASSOC)
+	{
+		// retrieve row
+		return mysql_fetch_array($query_id, $type);
+	}
+
 	function num_rows($query_id){
 		return mysql_num_rows($query_id);
 	}
 
 	function insert_id($resource) {
-		return $this->db->mysql_insert_id($resource);
+		return mysql_insert_id($resource);
 	}
 
 	function build_sql ( $__tableName, $__matchColumn, $__data ){

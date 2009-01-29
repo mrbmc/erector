@@ -19,14 +19,14 @@ class SimpleDB
 		return $this->db->query($sql);
 	}
 
-	function fetch_array($query_id)
-	{
-		return $this->db->fetch_array($query_id);
-	}
-
 	function query_first($sql)
 	{
 		return $this->db->query_first($sql);
+	}
+
+	function fetch_array($query_id)
+	{
+		return $this->db->fetch_array($query_id);
 	}
 
 	function query_write($table, $matchcolumn, $data) {

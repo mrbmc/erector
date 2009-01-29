@@ -18,13 +18,13 @@ define('APP',getcwd() . "/application");
 include_once APP.'/Config.class.php';				//Settings and configuration
 include_once LIB.'/Controller.class.php';			//Page controller class
 include_once LIB.'/Model.class.php';				//Parent data model class - ORM
+include_once LIB.'/Presenter.class.php';			//View handler
 include_once LIB.'/Dispatcher.class.php';			//URL routing and control
-include_once LIB.'/db/SimpleDB.class.php';			//DB persistence
 include_once LIB.'/Session.class.php';				//Session management
 include_once LIB.'/facebook/facebook.php';			//Facebook applications & pages
 include_once LIB.'/Paginate.class.php';				//List pagination class
-include_once LIB.'/Debugger.class.php';				//List pagination class
-include_once LIB.'/Presenter.class.php';
+include_once LIB.'/Erector.class.php';				//common functions and utilities
+include_once LIB.'/Debugger.class.php';				//Debugging tools
 
 
 /**++++++++++++++++++++++++++++++++++++++++++++++++++

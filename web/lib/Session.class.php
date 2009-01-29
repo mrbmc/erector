@@ -2,20 +2,27 @@
 
 class Session 
 {
+	private static $_instance;
 	public static $sessionID;
 
 	private function __construct()
 	{
 		session_start();
 		self::$sessionID = session_id();
+		if(!$this->get('userid'))
+		{
+			$this->set('userid',null);
+			$this->set('userstatus',null);
+		}
 	}
 
-	private static $_instance;
 	public static function instance () {
+
 		if (!isset(self::$_instance)) {
 			$className = __CLASS__;
 			self::$_instance = new $className;
 		}
+
 		return self::$_instance;
 	}
 

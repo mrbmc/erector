@@ -50,8 +50,11 @@ class Presenter
 
 		$this->validateTemplate();
 
+		$this->smarty->assign('DISPATCHER', obj_to_arr(Dispatcher::instance()));
+		$this->smarty->assign('CONFIG', obj_to_arr(Config::instance()));
 		$this->smarty->assign('DOCROOT', Config::instance()->DOCROOT);
-		$this->smarty->assign('DATA', $this->controller->toArray());
+		$this->smarty->assign('DATA', obj_to_arr($this->controller));
+
 		$this->OUTPUT = $this->smarty->fetch($this->view);
 	}
 
@@ -92,7 +95,9 @@ class Presenter
 	} 
 	private function xml () {
 		header("Content-type: text/xml");
-		$this->OUTPUT .= $this->objToXML($this->controller);
+		$this->OUTPUT .= "<".Dispatcher::instance()->controller.">";
+		$this->OUTPUT .= $this->objToXML($this->controller->xml);
+		$this->OUTPUT .= "</".Dispatcher::instance()->controller.">";
 		print $this->OUTPUT;
 	}
 

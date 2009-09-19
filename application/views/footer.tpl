@@ -4,5 +4,9 @@
 Erector framework
 </div><!-- /wrapper -->
 
+</div><!--/master-->
+
+{$ERRORS}
+
 </body>
 </html>

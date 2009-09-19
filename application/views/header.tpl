@@ -2,15 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head>
 	<title>{if $title!=""}{$title}{else}{$DATA.title|upper}{/if}</title>
-    <style type="text/css" media="all">@import "/css/style.css";</style>
-	<script type="text/javascript" src="/js/swfobject.js"></script>
+	<style type="text/css" media="all">@import "/css/screen.css";</style>
 	<script type="text/javascript" src="/js/jquery.js"></script>
 </head>
 <body>
 
+<div id="master">
+
 <div id="header">
-<ul id="globalnav">
-	<li id="nav_home"><a href="{$DOCROOT}/">HOME</a></li>
+<ul class="navigation" id="globalnav">
+	<li id="nav_home"><a href="{$DOCROOT}/">Home</a></li>
 {if $smarty.session.userid > 0}
 	<li id="nav_logout"><a href="{$DOCROOT}/login/logout">Log out</a></li>
 {else}

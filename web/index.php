@@ -13,8 +13,8 @@ ini_set('error_reporting', (DEBUG ? (E_ERROR | E_WARNING | E_PARSE ) : E_ERROR))
 /**++++++++++++++++++++++++++++++++++++++++++++++++++
  * Load some classes
  */
-define('LIB',getcwd() . "/lib");
-define('APP',getcwd() . "/application");
+define('LIB',getcwd() . "/../lib");
+define('APP',getcwd() . "/../application");
 include_once APP.'/Config.class.php';				//Settings and configuration
 include_once LIB.'/Controller.class.php';			//Page controller class
 include_once LIB.'/Model.class.php';				//Parent data model class - ORM

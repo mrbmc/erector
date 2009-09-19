@@ -1,0 +1,70 @@
+<?php
+class Config
+{
+
+	/**
+	 *	SITE CONFIGURATION
+	 */
+	var $EMAIL_NAME = "Erector";
+	var $EMAIL_ADDRESS = "no-reply@yourdomain.com";
+	var $UPLOADS_DIR = "/uploads";
+	var $ENV_STAGING = "LOCALHOST";
+	var $ENV_PRODUCTION = "";
+	var $DOCROOT = '';
+
+	/**
+	 * DATABASE CREDENTIALS
+	 */
+	//PRODUCTION
+	private $dsn_production = array(
+		'type' => "mysql",
+		'host' => "localhost",
+		'db' => "erectordb",
+		'user' => "erector",
+		'pass' => "password"
+	);
+	//STAGING
+	private $dsn_staging = array(
+		'type' => "mysql",
+		'host' => "localhost",
+		'db' => "erectordb",
+		'user' => "erector",
+		'pass' => "password"
+	);
+	public function dsn () {
+		return (stristr($_SERVER["HTTP_HOST"],$this->ENV_STAGING)!==FALSE) ? $this->dsn_staging : $this->dsn_production;
+	}
+
+
+	/**
+	 * FACEBOOK
+	 */
+	var $fb_apikey = '';
+	var $fb_apisecret = '';
+
+
+	/**
+	 *	STYLECONFIGURATION
+	 */
+	var $DATEFORMAT = "M.d.Y";
+	var $timezone = "America/New_York";
+	var $perPage = 10;
+
+
+
+	private function __construct() {
+		$this->DOCROOT = 'http://' . $_SERVER['HTTP_HOST'] . $this->DOCROOT;
+		date_default_timezone_set($this->timezone);
+		$this->UPLOADS_DIR = getcwd() . $this->UPLOADS_DIR;
+	}
+	private static $_instance;
+	public static function instance () {
+		if (!isset(self::$_instance)) {
+			$_classname = __CLASS__;
+			self::$_instance = new $_classname;
+		}
+		return self::$_instance;
+	}
+
+}
+?>

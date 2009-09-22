@@ -43,7 +43,9 @@ class SimpleDB_child
 		return mysql_num_rows($query_id);
 	}
 
-	function insert_id($resource) {
+	function insert_id($resource=null) {
+		if($resource==null)
+			$resource = $this->conn;
 		return mysql_insert_id($resource);
 	}
 

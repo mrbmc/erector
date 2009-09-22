@@ -37,7 +37,7 @@ class SimpleDB
 		return $this->db->num_rows($resource);
 	}
 	
-	function insert_id($resource) {
+	function insert_id($resource=null) {
 		return $this->db->insert_id($resource);
 	}
 

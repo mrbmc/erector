@@ -1,5 +1,5 @@
 
-{if $smarty.get.id}
+{if $DISPATCHER.id>0}
 
 {include file='admin/user_form.tpl'}
 
@@ -13,16 +13,14 @@
 		<th>#</th>
 		<th>Username</th>
 		<th>Name</th>
-		<th>Status</th>
 		<th>Date Joined</th>
 	</tr>
 {foreach from=$DATA.users item=row name=foo}
 	<tr>
 		<td>{$smarty.foreach.foo.iteration}</td>
-		<td><a href="{$DOCROOT}/admin/users/{$row.userid}">{$row.username}</a></td>
-		<td><strong>{$row.first_name} {$row.last_name}</strong></td>
-		<td>{$row.status}</td>
-		<td>{$row.dateline|date_format:"%B %e, %Y"}</td>
+		<td><a href="{$DOCROOT}/admin/users/{$row->userid}">{$row->username}</a></td>
+		<td><strong>{$row->first_name} {$row->last_name}</strong></td>
+		<td>{$row->date_created|date_format:"%B %e, %Y"}</td>
 	</tr>
 {/foreach}
 </table>

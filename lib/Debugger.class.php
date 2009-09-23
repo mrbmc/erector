@@ -19,7 +19,6 @@ class Debugger {
 	public static function trace() {
 		if(!DEBUG)
 			return;
-
 		$key = null;
 		$val = null;
 		$args = func_get_args();
@@ -42,8 +41,8 @@ class Debugger {
 		}
 		$return .= "<br />";
 		Debugger::$console .= $return;
-	//	if($force)
-	//		echo $return;
+		if(array_pop($args)===true)
+			echo $return;
 	}
 }
 ?>

@@ -25,6 +25,7 @@ function obj_to_arr($obj = null)
 	return object_to_array($obj);
 }
 
+
 function arr_to_obj($array = array()) {
     if (!empty($array)) {
         $data = false;
@@ -36,5 +37,13 @@ function arr_to_obj($array = array()) {
     return false;
 }
 
+function sql_sanitize ($v,$type=null) {
+	$val = trim($v);
+	if(is_numeric($v)) {
+		return filter_var($v,($type?$type:FILTER_SANITIZE_NUMBER_INT));
+	} else if(is_string($v)) {
+		return filter_var($v,($type?$type:FILTER_SANITIZE_STRING));
+	}
+}
 
 ?>

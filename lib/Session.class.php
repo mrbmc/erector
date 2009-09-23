@@ -9,11 +9,11 @@ class Session
 	{
 		session_start();
 		self::$sessionID = session_id();
-		if(!$this->get('userid'))
-		{
-			$this->set('userid',null);
-			$this->set('userstatus',null);
-		}
+//		if(!$this->get('userid'))
+//		{
+//			$this->set('userid',null);
+//			$this->set('userstatus',null);
+//		}
 	}
 
 	public static function instance () {

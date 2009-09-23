@@ -1,40 +1,28 @@
 <?php
-
-
-/**++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
  * DEBUGGING AND ERROR REPORTING
  */
-define("DEBUG",1); // This boolean controls many useful debugging functions
+define("DEBUG",true); 
 ini_set('display_errors', DEBUG);
 ini_set('error_reporting', (DEBUG ? (E_ERROR | E_WARNING | E_PARSE ) : E_ERROR));
-//ini_set('include_path',ini_get('include_path').";".getcwd()."/lib/");
 
-
-/**++++++++++++++++++++++++++++++++++++++++++++++++++
- * Load some classes
+/**
+ * 
+ * Initialize configuration and load the codebase
+ * 
  */
-define('LIB',getcwd() . "/../lib");
-define('APP',getcwd() . "/../application");
-include_once APP.'/Config.class.php';				//Settings and configuration
-include_once LIB.'/Controller.class.php';			//Page controller class
-include_once LIB.'/Model.class.php';				//Parent data model class - ORM
-include_once LIB.'/Presenter.class.php';			//View handler
-include_once LIB.'/Dispatcher.class.php';			//URL routing and control
-include_once LIB.'/Session.class.php';				//Session management
-include_once LIB.'/facebook/facebook.php';			//Facebook applications & pages
-include_once LIB.'/Paginate.class.php';				//List pagination class
-include_once LIB.'/Erector.class.php';				//common functions and utilities
-include_once LIB.'/Debugger.class.php';				//Debugging tools
-
-
-/**++++++++++++++++++++++++++++++++++++++++++++++++++
- * Initialize configuration and settings
- */
+include_once getcwd().'/../application/Config.class.php';				//Settings and configuration
 Config::instance();
 
-
-/**++++++++++++++++++++++++++++++++++++++++++++++++++
- * Load data models
+/**
+ * 
+ * MODEL
+ * 
+ * Auto load the data models as they're needed 
+ * 
+ * By convention models are named in singular
+ * i.e. User
+ * 
  */
 function __autoload($class_name) {
 	$file = APP."/models/" . $class_name . '.model.php';
@@ -43,8 +31,7 @@ function __autoload($class_name) {
     include_once $file;
 }
 
-
-/**++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
  * 
  * CONTROLLER
  * 
@@ -55,14 +42,13 @@ function __autoload($class_name) {
  * This allows for static pages to be added with no
  * controller class. Not that you should... but you could.
  * 
- * TODO: replace with a dispatcher class that allows more
- * control over URL -> controller mapping
+ * By convention the controllers are named in plural:
+ * i.e. Users
  * 
  */
 Dispatcher::instance()->dispatch();
 
-
-/**++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
  * 
  * VIEW
  * 
@@ -71,7 +57,7 @@ Dispatcher::instance()->dispatch();
  * full model / view separation.
  *  
  */
-$view = new Presenter();
+Presenter::instance()->present();
 
 exit();
 ?>

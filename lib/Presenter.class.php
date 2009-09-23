@@ -1,16 +1,10 @@
 <?php
 
-//Presentation formats
-include_once LIB.'/Smarty/Smarty.class.php';				//HTML Template engine
-//include_once LIB.'/mailers/PHPMailer.class.php';			//Email sending class
-//include_once LIB.'/dompdf/dompdf_config.inc.php';			//PDF Generation Class
-//include_once LIB.'/captcha/CaptchaSecurityImages.php';		//CAPTCHA turing test
-
 /**
  * PRESENTER CLASS
- * @author brian@eislabs.com
+ * @author brian@mrbmc.com
  * @description Loads a template engine and generates the output.
- * @todo Create an abstract class, and subclasses for each format
+ * @todo Create an abstract class for each format
  */
 
 class Presenter 
@@ -21,11 +15,24 @@ class Presenter
 	private $smarty;
 	private $OUTPUT;
 
-	public function __construct () {
+	private function __construct () {
 		$this->controller = Dispatcher::instance()->controllerInstance;
-		$format = (isset($_GET['format'])) ? $_GET['format'] : Dispatcher::instance()->format;
-		$this->$format();
+		$this->format = (isset($_GET['format'])) ? $_GET['format'] : Dispatcher::instance()->format;
 	}
+
+	private static $_instance;
+	public static function instance () {
+		if (!isset(self::$_instance)) {
+			$_classname = __CLASS__;
+			self::$_instance = new $_classname;
+		}
+		return self::$_instance;
+	}
+
+	public function present() {
+		$method = $this->format;
+		$this->$method();
+	}	
 
 	private function validateTemplate () {
 		$this->view = $this->controller->view;
@@ -40,6 +47,7 @@ class Presenter
 
 	//Compile the view
 	private function compile () {
+		include_once LIB.'/Smarty/Smarty.class.php';//Template engine
 		$this->smarty = new Smarty();
 		$this->smarty->template_dir = APP.'/views';
 		$this->smarty->compile_dir = $this->smarty->cache_dir = LIB.'/../cache';
@@ -47,14 +55,12 @@ class Presenter
 		$this->smarty->caching = !DEBUG;
 		$this->smarty->force_compile = DEBUG;
 		$this->smarty->debugging = DEBUG;
-
-//		Debugger::trace($this->smarty);
+		//Debugger::trace($this->smarty);
 
 		$this->validateTemplate();
-
 		$this->smarty->assign('DISPATCHER', obj_to_arr(Dispatcher::instance()));
 		$this->smarty->assign('CONFIG', obj_to_arr(Config::instance()));
-		$this->smarty->assign('DOCROOT', Config::instance()->DOCROOT);
+		$this->smarty->assign('DOCROOT', "http://".$_SERVER['HTTP_HOST']);
 		$this->smarty->assign('DATA', (array)($this->controller));
 		$this->OUTPUT = $this->smarty->fetch($this->view);
 		if(DEBUG)
@@ -147,12 +153,20 @@ class Presenter
 	}
 	private function csv () { 
 		$this->OUTPUT .= $this->objToCSV($this->controller->data);
-		header("Content-type: text/plain");
+//		header("Content-type: text/plain");
+		header("Pragma: public"); // required
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header("Cache-Control: private",false); // required for certain browsers 
+		header("Content-type: application/octet-stream");
+		header("Content-Disposition: attachment; filename=\"".Dispatcher::instance()->action."-data.csv\"");
+
 		print $this->OUTPUT;
 	}
 
 
 	private function pdf () {
+		include_once LIB.'/dompdf/dompdf_config.inc.php';
 		$dompdf = new DOMPDF();
 		$dompdf->set_paper("letter","portrait");
 		$dompdf->load_html($this->OUTPUT);
@@ -161,6 +175,7 @@ class Presenter
 	}
 	
 	private function email () {
+		include_once LIB.'/mailers/PHPMailer.class.php';
 		$this->compile();
 
 		$mail = new PHPMailer();

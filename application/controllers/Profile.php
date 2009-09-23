@@ -4,19 +4,20 @@ class Profile extends Controller {
 
 	function __construct () {
 		parent::__construct("Profile");
-		$this->action();
 	}
 
 	protected function update () {
-		if($this->user->id<=0)
+		if($this->user->userid<=0)
 		{
 			$this->redirect = "/profile";
 			return;
 		}
-
-		$this->user->setFrom($_POST);
-		if($_REQUEST['password_old'] == $this->user->password)
-			$this->user->password = $_POST['password_new'];
+		$this->user = new User($_POST['userid']);
+		$this->user->set($_POST);
+		if(md5($_POST['password_old']) == $this->user->password)
+			$this->user->password = md5(sql_sanitize($_POST['password_new']));
+		else
+			unset($this->user->password);
 		$this->user->save();
 		$this->redirect = "/profile";
 	}
@@ -25,7 +26,7 @@ class Profile extends Controller {
 		$this->user->setFrom($_POST);
 		$this->user->confirmation = substr(md5(uniqid(rand())),0,10);
 		$this->user->save();
-		if($this->user->id > 0) {
+		if($this->user->userid > 0) {
 			Session::instance()->set('feedback','Thank you for registering. An email has been sent to you with details on activating your account.');
 			$this->format = "email";
 			$this->view = "emails/signup.tpl";
@@ -40,7 +41,7 @@ class Profile extends Controller {
 	}
 	protected function confirm () {
 		$this->user = new User(array("confirmation"=>$_GET['code']));
-		if($this->user->id > 0)
+		if($this->user->userid > 0)
 		{
 			$this->user->status="member";
 			$this->user->save();
@@ -70,7 +71,7 @@ class Profile extends Controller {
 		exit;
 	}
 	protected function validate_pw () {
-		echo ($_REQUEST['password_old'] == $this->user->password) ? "true" : "false";
+		echo (md5($_REQUEST['password_old']) == $this->user->password) ? "true" : "false";
 		exit;
 	}
 	protected function pw_reminder () {
@@ -83,7 +84,7 @@ class Profile extends Controller {
 		else if($_POST['email'])
 			$this->user = new User(array("email"=>$_POST['email']));
 
-		if($this->user->id>0)
+		if($this->user->userid>0)
 		{
 			$this->EMAIL_LIST = array($this->user->email);
 			$this->view = 'emails/pw_reminder';

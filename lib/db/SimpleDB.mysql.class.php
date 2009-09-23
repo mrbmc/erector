@@ -51,7 +51,6 @@ class SimpleDB_child
 
 	function build_sql ( $__tableName, $__matchColumn, $__data ){
 		$fieldresults = $this->query("SHOW COLUMNS FROM $__tableName");
-
 		//	UPDATE STATEMENTS
 		if( $__data[$__matchColumn] ) {
 			$statement = "UPDATE " . $__tableName . " SET ";

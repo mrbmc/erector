@@ -10,7 +10,7 @@
 <form method="post" action="{$DOCROOT}/login">
 	<h3>Member Sign in</h3>
 	{if $DATA.user.confirmation}<input type="hidden" name="confirm_code" value="{$DATA.user.confirmation}" />{/if}
-	<input type="hidden" name="referer" value="{$smarty.server.HTTP_REFERER}" />
+	<input type="hidden" name="referrer" value="{$smarty.server.HTTP_REFERER}" />
 	<div>
 		<label for="username">Username or email</label>
 		<br /><input type="text" id="username" name="username" class="text" tabindex="1" />

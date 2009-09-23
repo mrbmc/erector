@@ -64,7 +64,7 @@ $(document).ready(function() {
 /*]]>*/</script>{/literal}
  
 <form method="POST" action="/profile/update/" name="userForm" id="userForm">
-<input type="hidden" name="userid" value="{$DATA.user.id}" />
+<input type="hidden" name="userid" value="{$DATA.user.userid}" />
 
 <fieldset>
 <legend>User Info</legend>
@@ -81,11 +81,6 @@ $(document).ready(function() {
 <div>
 	<label>Email</label>
 	<span><input type="text" name="email" value="{$DATA.user.email}" /></span>
-	<span class="status"></span>
-</div>
-<div>
-	<label>Phone</label>
-	<span><input type="text" name="phone" value="{$DATA.user.phone}" /></span>
 	<span class="status"></span>
 </div>
 </fieldset>
@@ -125,8 +120,7 @@ $(document).ready(function() {
 </div>
 <div>
 	<label>Address</label>
-	<span><input type="text" name="address" value="{$DATA.user.address}" /></span>
-	<label>&nbsp;</label><span><input type="text" name="address_2" value="{$DATA.user.address_2}" /></span>
+	<span><input type="text" name="address" value="{$DATA.user.address}" /><input type="text" name="address_2" value="{$DATA.user.address_2}" /></span>
 	<span class="status"></span>
 </div>
 <div>

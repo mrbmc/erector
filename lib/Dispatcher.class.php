@@ -1,4 +1,10 @@
 <?php
+/**
+ * 
+ * TODO: Augment dispatcher class with routing configuration.
+ * allow fine graine control over URL -> controller mapping
+ * 
+ * */
 
 class Dispatcher
 {

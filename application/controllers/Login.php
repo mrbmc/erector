@@ -15,10 +15,17 @@ class Login extends Controller {
 	}
 
 	protected function login () {
-		$this->user = new User(array('username'=>$_REQUEST['username'],'password'=>$_REQUEST['password']));
+		$this->user = new User(
+			array(
+				'username'=>sql_sanitize($_REQUEST['username']),
+				'password'=>md5(sql_sanitize($_REQUEST['password']))
+			)
+		);
+//		Debugger::trace('user',$this->user,true);
 		Session::instance()->set('userstatus',$this->user->status);
 		if($this->user->status!='pending')
-			Session::instance()->set('userid',$this->user->id);
+			Session::instance()->set('userid',$this->user->userid);
+//		Debugger::trace('session',$_SESSION,true);
 	}
 
 	protected function logout () {

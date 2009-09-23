@@ -5,8 +5,9 @@ class Dispatcher
 	public $controllerInstance;
 
 	public $controller = "index";
-	public $action = "index";
+	public $action;
 	public $id;
+	public $format = 'html';
 
 	private function __construct() {}
 
@@ -22,7 +23,15 @@ class Dispatcher
 	private function parseURL () {
 		if($_SERVER["REQUEST_URI"]=="/")
 			return;
-		$args = explode("/",$_SERVER['REDIRECT_URL']);
+
+		if(stristr($_SERVER['REDIRECT_URL'],".")) {
+			$tmp = explode(".",$_SERVER['REDIRECT_URL']);
+			$url = $tmp[0];
+			$format = $tmp[1];
+		} else
+			$url = $_SERVER['REDIRECT_URL'];
+
+		$args = explode("/",$url);
 		for($i=1,$x=count($args);$i<$x;$i++)
 		{
 			if(is_numeric($args[$i]))
@@ -42,6 +51,10 @@ class Dispatcher
 			$this->action = trim($_GET['action']);
 		if(isset($_GET['id']))
 			$this->id = trim($_GET['id']);
+
+		if(isset($format))
+			$this->format = strtolower(trim($format));
+
 	}
 
 	private function validateClass () {
@@ -58,6 +71,8 @@ class Dispatcher
 		$this->parseURL();
 		$c = $this->validateClass();
 		$this->controllerInstance = new $c();
+		if($this->format)
+			$this->controllerInstance->format = $this->format;
 	}
 }
 

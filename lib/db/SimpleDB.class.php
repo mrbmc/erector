@@ -33,7 +33,7 @@ class SimpleDB
 		return $this->db->query($this->db->build_sql($table, $matchcolumn, $data));
 	}
 
-	function num_rows($resource) {
+	function num_rows($resource=null) {
 		return $this->db->num_rows($resource);
 	}
 	

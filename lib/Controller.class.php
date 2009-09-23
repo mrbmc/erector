@@ -4,34 +4,27 @@ class Controller {
 
 	public $title;
 	public $view;
-	public $format = "html";
 	public $redirect;
 	public $user;
 	public $xml;
-	
-	public $method;
 
 	function __construct($_title = "home")
 	{
-		$this->title = ($_title!="") ? $_title : $_REQUEST['act'];
+		$this->title = ($_title!="") ? $_title : $_REQUEST['action'];
 		$this->view = strtolower(Dispatcher::instance()->controller);
 		$this->user = new User(array('userid' => Session::instance()->get('userid')));
-		$this->method = Dispatcher::instance()->action;
-		$this->action($this->method);
+		$this->action(Dispatcher::instance()->action);
 	}
 
-	protected function action ($_method=null) {
-		//Debugger::trace("method",$method);
-		if(method_exists($this,$_method)){
-			$this->$_method();
-		} else if($_method!=null) {
+	protected function action ($_action=null) {
+		//Debugger::trace("action",$_action);
+		if(method_exists($this,$_action)){
+			$this->$_action();
+		} else if($_action!=null) {
 			$this->view = "errors/404";
 		} else if(method_exists($this,"index")) {
 			$this->index();
 		}
-	}
-
-	public function index() {
 	}
 
 }

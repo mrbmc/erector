@@ -1,12 +1,16 @@
 <?php
 
 //Presentation formats
-include_once LIB.'/smarty/Smarty.class.php';				//HTML Template engine
+include_once LIB.'/Smarty/Smarty.class.php';				//HTML Template engine
+//include_once LIB.'/mailers/PHPMailer.class.php';			//Email sending class
+//include_once LIB.'/dompdf/dompdf_config.inc.php';			//PDF Generation Class
 //include_once LIB.'/captcha/CaptchaSecurityImages.php';		//CAPTCHA turing test
 
 /**
  * PRESENTER CLASS
+ * @author brian@eislabs.com
  * @description Loads a template engine and generates the output.
+ * @todo Create an abstract class, and subclasses for each format
  */
 
 class Presenter 
@@ -19,7 +23,7 @@ class Presenter
 
 	public function __construct () {
 		$this->controller = Dispatcher::instance()->controllerInstance;
-		$format = (isset($_GET['format'])) ? $_GET['format'] : $this->controller->format;
+		$format = (isset($_GET['format'])) ? $_GET['format'] : Dispatcher::instance()->format;
 		$this->$format();
 	}
 
@@ -48,13 +52,14 @@ class Presenter
 
 		$this->validateTemplate();
 
-		$this->smarty->assign('DISPATCHER', object_to_array(Dispatcher::instance()));
-		$this->smarty->assign('CONFIG', object_to_array(Config::instance()));
+		$this->smarty->assign('DISPATCHER', obj_to_arr(Dispatcher::instance()));
+		$this->smarty->assign('CONFIG', obj_to_arr(Config::instance()));
 		$this->smarty->assign('DOCROOT', Config::instance()->DOCROOT);
-		$this->smarty->assign('DATA', object_to_array($this->controller));
-		if(!DEBUG)
-			$this->smarty->assign('ERRORS', Debugger::$console);
+		$this->smarty->assign('DATA', (array)($this->controller));
 		$this->OUTPUT = $this->smarty->fetch($this->view);
+		if(DEBUG)
+			$this->OUTPUT .= Debugger::$console;
+
 	}
 
 
@@ -148,7 +153,6 @@ class Presenter
 
 
 	private function pdf () {
-		include_once LIB.'/dompdf/dompdf_config.inc.php';			//PDF Generation Class
 		$dompdf = new DOMPDF();
 		$dompdf->set_paper("letter","portrait");
 		$dompdf->load_html($this->OUTPUT);
@@ -157,7 +161,6 @@ class Presenter
 	}
 	
 	private function email () {
-		include_once LIB.'/mailers/PHPMailer.class.php';			//Email sending class
 		$this->compile();
 
 		$mail = new PHPMailer();
@@ -197,6 +200,9 @@ class Presenter
 
 		header("Content-type: text/plain");
 		print $this->OUTPUT;
+	}
+	private function txt() {
+		$this->text();
 	}
 	
 	private function html () {

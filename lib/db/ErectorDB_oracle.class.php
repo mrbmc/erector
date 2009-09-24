@@ -1,6 +1,6 @@
 <?php
 
-class SimpleDB_child
+class ErectorDB_oracle
 {
 
 	private $conn = 0;

@@ -1,9 +1,12 @@
 <?php
-
-class SimpleDB_child
+ini_set('display_errors',true);
+include_once LIB.'/db/iErectorDB.interface.php';
+class ErectorDB_mysql implements iErectorDB
 {
 
-	private $conn = 0;
+	private $db;
+	private $conn;
+	private $dsn;
 
 	function __construct($dsn) {
 		return $this->connect($dsn);
@@ -12,6 +15,7 @@ class SimpleDB_child
 	function connect($dsn) {
 		$this->conn = mysql_connect($dsn['host'], $dsn['user'], $dsn['pass']) or die(mysql_error());;
 		mysql_select_db($dsn['db'], $this->conn);
+		$this->dsn =& $dsn;
 		return true;
 	}
 
@@ -33,6 +37,11 @@ class SimpleDB_child
 		return $returnarray;
 	}
 
+	function query_write($table, $matchcolumn, $data) {
+		$sql = $this->build_sql($table,$matchcolumn,$data);
+		return $this->query($sql);
+	}
+
 	function fetch_array($query_id, $type = MYSQL_ASSOC)
 	{
 		// retrieve row
@@ -43,7 +52,7 @@ class SimpleDB_child
 		return mysql_num_rows($query_id);
 	}
 
-	function insert_id($resource=null) {
+	function insert_id($resource) {
 		if($resource==null)
 			$resource = $this->conn;
 		return mysql_insert_id($resource);
@@ -51,6 +60,7 @@ class SimpleDB_child
 
 	function build_sql ( $__tableName, $__matchColumn, $__data ){
 		$fieldresults = $this->query("SHOW COLUMNS FROM $__tableName");
+
 		//	UPDATE STATEMENTS
 		if( $__data[$__matchColumn] ) {
 			$statement = "UPDATE " . $__tableName . " SET ";

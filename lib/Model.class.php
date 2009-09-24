@@ -1,22 +1,20 @@
 <?php
 
-include_once LIB.'/db/SimpleDB.class.php';			//DB persistence
-
 abstract class Model {
 
 	protected $sql;
 	protected static $db;
 	protected static $table;
-	protected static $matchColumn;
+	protected $matchColumn;
 
 	/**
 	 * @param mixed args a sql string, ID integer, or array of parameters
 	 */
 	function __construct($args=null)
 	{
-		self::$db = new SimpleDB(Config::instance()->dsn());
+		self::$db =& Config::instance()->db;
 		self::$table = strtolower(get_class($this));
-		self::$matchColumn = self::$table.'id';
+		$this->matchColumn = self::$table.'id';
 
 		if($args!=null) {
 			$data = self::load($args);
@@ -32,7 +30,7 @@ abstract class Model {
 	public static function load ($args=null) {
 		// construct the SQL
 		if(is_numeric($args)) {
-			$sql_extra = "AND ".self::getMatchColumn()."=".intval($args);
+			$sql_extra = "AND ".$this->getMatchColumn()."=".intval($args);
 		} elseif(is_string($args)) {
 			$sql_extra = $args;
 		} else if(is_array($args)) {
@@ -60,10 +58,10 @@ abstract class Model {
 
 
 	public function save ($_matchcolumn=null,$_data=null) {
-		$matchcolumn = self::getMatchColumn($_matchcolumn);
+		$matchcolumn = $this->getMatchColumn($_matchcolumn);
 		if($_data==null)
 			$_data = (array)$this;
-		$this->sql = self::$db->build_sql(self::$table,$matchcolumn,$_data);
+		$this->sql = self::$db->build_sql(self::$table,$_matchcolumn,$_data);
 		$saved = self::$db->query($this->sql); 
 		if(stristr($this->sql,"INSERT")!==false && $saved==true)
 			$this->$matchcolumn = self::$db->insert_id();
@@ -72,7 +70,7 @@ abstract class Model {
 
 
 	public function delete ($_matchcolumn=null,$id) {
-		$_matchcolumn = self::getMatchColumn($_matchcolumn);
+		$_matchcolumn = $this->getMatchColumn($_matchcolumn);
 		$this->sql = "DELETE FROM ".self::$table." WHERE $_matchcolumn = '$id'";
 		return self::$db->query($this->sql);
 	}
@@ -92,10 +90,10 @@ abstract class Model {
 	}
 
 
-	private static function getMatchColumn ($mc=null) {
+	private function getMatchColumn ($mc) {
 		if($mc==null)
-			if(self::$matchColumn!=null)
-				$mc = self::$matchColumn;
+			if($this->matchColumn!=null)
+				$mc = $this->matchColumn;
 			else
 				$mc = self::$table.'id';
 		return $mc;

@@ -2,16 +2,17 @@
 
 class Controller {
 
-	public $title;
-	public $view;
+	public $title = "Home";
+	public $view = "index";
 	public $redirect;
 	public $user;
 	public $xml;
+	public $data;
 
-	function __construct($_title = "home")
+	function __construct($_title=null,$_view=null)
 	{
-		$this->title = ($_title!="") ? $_title : $_REQUEST['action'];
-		$this->view = strtolower(Dispatcher::instance()->controller);
+		$this->title = ($_title) ? $_title : ($_REQUEST['action'] ? $_REQUEST['action'] : $this->title);
+		$this->view = ($_view) ? $_view : (Dispatcher::instance()->controller!="" ? strtolower(Dispatcher::instance()->controller) : $this->view);
 		$this->user = new User(array('userid' => Session::instance()->get('userid')));
 		$this->action(Dispatcher::instance()->action);
 	}

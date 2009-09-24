@@ -65,6 +65,7 @@ class Config
  * NO NEED TO EDIT BELOW HERE
  * ----------------------------------------------------------------------
  */
+	public $db;
 
 	private function __construct() {
 		define('LIB',getcwd() . "/../lib");
@@ -81,7 +82,14 @@ class Config
 		include_once LIB.'/Debugger.class.php';				//Debugging tools
 		include_once LIB.'/facebook/facebook.php';			//Facebook applications & pages
 
+		// Establish the Database connection once
+		$env = "dsn_".strtolower(self::getEnvironment());
+		$dsn =& $this->$env;
+		$class = 'ErectorDB_'.$dsn['type'];
+		include_once LIB.'/db/'.$class.'.class.php';
+		$this->db = new $class($dsn);
 	}
+
 	private static $_instance;
 	public static function instance () {
 		if (!isset(self::$_instance)) {
@@ -89,11 +97,6 @@ class Config
 			self::$_instance = new $_classname;
 		}
 		return self::$_instance;
-	}
-
-	public static function dsn () {
-		$env = "dsn_".strtolower(self::getEnvironment());
-		return Config::instance()->$env;
 	}
 
 	private function getEnvironment () {

@@ -8,13 +8,13 @@ class Admin extends Controller {
 	private $id;
 
 	function __construct () {
-		parent::__construct("Admin");
-		$this->title = "Admin area";
-		$this->view = 'admin/admin.tpl';
 		$this->id = Dispatcher::instance()->id;
 		if($_GET['do']!=""){
 			eval($this->$_GET['do']());
 		}
+		$this->title = "Admin area";
+		$this->view = 'admin/admin.tpl';
+		parent::__construct($this->title,$this->view);
 	}
 
 
@@ -22,7 +22,7 @@ class Admin extends Controller {
 		$u = new User();
 		if($_POST['do']=="save")
 		{
-			$u->setFrom($_POST);
+			$u->set($_POST);
 			$u->save();
 		}
 		if($_POST['do']=="delete")
@@ -39,28 +39,7 @@ class Admin extends Controller {
 		else
 			$this->users = User::load();
 		$this->data =& $this->users;
-			
 	}
-
-	
-	protected function hashtags () {
-		$obj = new Hashtag();
-		if($_POST['do']=="save")
-		{
-			$obj->set($_POST);
-			$obj->save();
-		}
-		if($this->id!="") {
-			$this->hashtag = new Hashtag(array('hashtagid'=>$this->id));
-		}
-		else {
-			$this->hashtags = Hashtag::load('ORDER BY date_added DESC');
-		}
-		
-		$this->data =& $this->hashtags;
-	}
-
-
 
 }
 

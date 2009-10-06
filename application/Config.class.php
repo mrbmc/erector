@@ -6,9 +6,9 @@ class Config
 	 *	SITE CONFIGURATION
 	 */
 	public $SITE_NAME = "Erector!";
-	private static $ENV_PRODUCTION = "";
+	private static $ENV_PRODUCTION = "erector.kageki.com";
 	private static $ENV_STAGE = "";
-	private static $ENV_DEV = "localhost:8008";
+	private static $ENV_DEV = "localhost:9090";
 	private $EMAIL_NAME = "Erector";
 	private $EMAIL_ADDRESS = "no-reply@kageki.com";
 
@@ -43,7 +43,7 @@ class Config
 	/**
 	 *	STYLECONFIGURATION
 	 */
-	const DATEFORMAT = "M.d.Y";
+	const DATEFORMAT = "M dS, Y";
 	const TIMEZONE = "America/New_York";
 	const PERPAGE = 10;
 
@@ -56,8 +56,8 @@ class Config
 	/**
 	 * Amazon Web Services
 	 */
-	const AWS_ID = "0BDYE6GJ8H4J5BRZD702"; 
-	const AWS_SECRET = "YIj2f2dEL65oQmp4D5gDnAInJunDZ0UajQMxeasB";
+	const AWS_ID = ""; 
+	const AWS_SECRET = "";
 
 
 /**
@@ -81,13 +81,6 @@ class Config
 		include_once LIB.'/Paginate.class.php';				//List pagination class
 		include_once LIB.'/Debugger.class.php';				//Debugging tools
 		include_once LIB.'/facebook/facebook.php';			//Facebook applications & pages
-
-		// Establish the Database connection once
-		$env = "dsn_".strtolower(self::getEnvironment());
-		$dsn =& $this->$env;
-		$class = 'ErectorDB_'.$dsn['type'];
-		include_once LIB.'/db/'.$class.'.class.php';
-		$this->db = new $class($dsn);
 	}
 
 	private static $_instance;
@@ -112,6 +105,15 @@ class Config
 			return "PRODUCTION";
 		break;
 		}
+	}
+	
+	public function config() {
+		// Establish the Database connection once
+		$env = "dsn_".strtolower(self::getEnvironment());
+		$dsn =& $this->$env;
+		$class = 'ErectorDB_'.$dsn['type'];
+		include_once LIB.'/db/'.$class.'.class.php';
+		$this->db = new $class($dsn);
 	}
 
 }

@@ -11,8 +11,8 @@ ini_set('error_reporting', (DEBUG ? (E_ERROR | E_WARNING | E_PARSE ) : E_ERROR))
  * Initialize configuration and load the codebase
  * 
  */
-include_once getcwd().'/../application/Config.class.php';				//Settings and configuration
-Config::instance();
+include_once getcwd().'/../application/Config.class.php';
+Config::instance()->config();
 
 /**
  * 

@@ -11,23 +11,12 @@ class Controller {
 
 	function __construct($_title=null,$_view=null)
 	{
-		$this->title = ($_title) ? $_title : ($_REQUEST['action'] ? $_REQUEST['action'] : $this->title);
+		$this->user = Session::instance()->get('user');
+		$this->title = ($_title) ? $_title : (Dispatcher::instance()->action ? Dispatcher::instance()->action : $this->title);
 		$this->view = ($_view) ? $_view : (Dispatcher::instance()->controller!="" ? strtolower(Dispatcher::instance()->controller) : $this->view);
-		$this->user = new User(array('userid' => Session::instance()->get('userid')));
-		$this->action(Dispatcher::instance()->action);
+		$this->pagenav = new Paginate();
+		//Debugger::trace("controller",$this,true);
 	}
-
-	protected function action ($_action=null) {
-		//Debugger::trace("action",$_action);
-		if(method_exists($this,$_action)){
-			$this->$_action();
-		} else if($_action!=null) {
-			$this->view = "errors/404";
-		} else if(method_exists($this,"index")) {
-			$this->index();
-		}
-	}
-
 }
  
 

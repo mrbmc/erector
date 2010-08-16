@@ -40,9 +40,10 @@ class Debugger {
 			$return .= $val;
 		}
 		$return .= "<br />";
-		Debugger::$console .= $return;
 		if(array_pop($args)===true)
 			echo $return;
+		else
+			Debugger::$console .= $return;
 	}
 }
 ?>

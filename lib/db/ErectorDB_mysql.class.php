@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors',true);
 include_once LIB.'/db/iErectorDB.interface.php';
 class ErectorDB_mysql implements iErectorDB
 {
@@ -49,7 +48,8 @@ class ErectorDB_mysql implements iErectorDB
 	}
 
 	function num_rows($query_id){
-		return mysql_num_rows($query_id);
+		$result = mysql_query("SELECT FOUND_ROWS()", $this->conn);
+//		return mysql_num_rows($query_id);
 	}
 
 	function insert_id($resource) {

@@ -10,9 +10,10 @@ class Dispatcher
 {
 	public $controllerInstance;
 
-	public $controller = "index";
-	public $action;
-	public $id;
+	public $controller = "Index";
+	public $action = "index";
+	public $view = "index";
+	public $params;
 	public $format = 'html';
 
 	private function __construct() {}
@@ -37,16 +38,35 @@ class Dispatcher
 		} else
 			$url = $_SERVER['REDIRECT_URL'];
 
+/**
+ * SMART URL PARSING
+ * COMMON URL FORMATS
+ * controller/
+ * controller/action
+ * controller/action/id
+ * controller/id
+ */
 		$args = explode("/",$url);
-		for($i=1,$x=count($args);$i<$x;$i++)
-		{
-			if(is_numeric($args[$i]))
-				$this->id = $args[$i];
-			else if($i<=1)
-				$this->controller = $args[$i];
-			else if(!$this->action)
-				$this->action = $args[$i];
+		array_shift($args);
+		$count = count($args);
+		$this->controller = $this->validateController($args[0]);
+		$this->action = $this->validateAction($args[1]);
+
+		if($this->action==$args[1]) {
+			$params = array_slice($args,2);
+		} else {
+			$params = array_slice($args,1);
 		}
+		if(count($params)>1)
+			foreach($params as $k=>$v)
+				$this->params[$k] = $v;
+		else
+			$this->params['id'] = $params[0];
+
+		if($this->controller!=$args[0]) {
+			$this->view = $args[0];
+		}
+
 
 		// Override the neat URL structure with key=val pairs
 		if(isset($_GET['controller']))
@@ -56,29 +76,58 @@ class Dispatcher
 		if(isset($_GET['action']))
 			$this->action = trim($_GET['action']);
 		if(isset($_GET['id']))
-			$this->id = trim($_GET['id']);
+			$this->params['id'] = trim($_GET['id']);
 
 		if(isset($format))
 			$this->format = strtolower(trim($format));
 
 	}
 
-	private function validateClass () {
-		if(file_exists(APP."/controllers/" . ucfirst(strtolower($this->controller)) . ".php"))
-			include_once (APP."/controllers/" . ucfirst(strtolower($this->controller)) . ".php");
+	private function validateController ($_class=null) {
+		$class = ($_class!=null) ? $_class : $this->controller;
+		$class = ucfirst(strtolower($class));
+		if(file_exists(APP."/controllers/" . ucfirst(strtolower($class)) . ".php"))
+			require_once (APP."/controllers/" . ucfirst(strtolower($class)) . ".php");
+				if(class_exists($class) && get_parent_class($class)!="Model")
+					return $class;
+		require_once LIB."/Controller.class.php";
+		return "Controller";
+	}
+
+	private function validateAction($_action=null) {
+		$action = ($_action!=null)?$_action:$this->action;
+		$controllerClass = $this->validateController(null);
+		if(method_exists($controllerClass,$action))
+			return $action;
+		else if(method_exists($controllerClass,"index"))
+			return "index";
 		else
-			include_once LIB."/Controller.class.php";
-		if(!class_exists($this->controller) || get_parent_class($this->controller)=="Model")
-			return "Controller";
-		return $this->controller;
+			return false;
+	}
+
+	private function executeController ($_controller=null) {
+		$controller = $this->validateController($_controller);
+		$path = ($this->controller=="Controller")?(LIB . "/Controller.class.php"):(APP."/controllers/" . $this->controller . ".php");
+		include_once ($path);
+		$this->controllerInstance = new $controller();
+	}
+
+	private function executeAction ($_action=null) {
+		$action = $this->validateAction($_action);
+		if($action)
+			$this->controllerInstance->$action();
+		else
+			$this->controllerInstance->view = $this->view;
 	}
 
 	public function dispatch () {
 		$this->parseURL();
-		$c = $this->validateClass();
-		$this->controllerInstance = new $c();
+		$this->executeController();
+		$this->executeAction();
 		if($this->format)
 			$this->controllerInstance->format = $this->format;
+
+		//Debugger::trace('dispatcher',Dispatcher::instance(),true);
 	}
 }
 

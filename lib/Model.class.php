@@ -4,8 +4,11 @@ abstract class Model {
 
 	protected $sql;
 	protected static $db;
-	protected static $table;
+	public static $table;
 	protected $matchColumn;
+	public $num_rows;
+	public $xml;
+	public $json;
 
 	/**
 	 * @param mixed args a sql string, ID integer, or array of parameters
@@ -22,49 +25,70 @@ abstract class Model {
 		}
 	}
 
+	public static function getCount () {
+		$args = func_get_args();
+		$args = $args[0];
+		$where = (isset($args['where'])) ? $args['where'] : $args;
+		if(is_numeric($where)) {
+			$_where = "AND ".$this->getMatchColumn()."=".intval($where);
+		} elseif(is_string($where)) {
+			$_where = $where;
+		} elseif(is_array($where)) {
+				foreach($where as $k=>$v)
+					$_where .= "AND ".$k." LIKE '".$v."' ";
+		}
+		$sql = "SELECT count(*) FROM ".self::$table." WHERE 1 ".$_where;
+		$results = Config::instance()->db->query_first($sql);
+		return $results['count(*)'];
+	}
+
 	/**
 	 * @name load
 	 * @param mixed args a string, integer, or array of parameters to create SQL
 	 * @return array an array populated with Objects for the data found
 	 */
-	public static function load ($args=null) {
-		// construct the SQL
-		if(is_numeric($args)) {
-			$sql_extra = "AND ".$this->getMatchColumn()."=".intval($args);
-		} elseif(is_string($args)) {
-			$sql_extra = $args;
-		} else if(is_array($args)) {
-			foreach($args as $k=>$v)
-				$sql_extra .= "AND ".$k." LIKE '".$v."' ";
+	public static function load () {
+		$args = func_get_args();
+		$args = $args[0];
+		$where = (isset($args['where'])) ? $args['where'] : $args;
+		if(is_numeric($where)) {
+			$_where = "AND ".$this->getMatchColumn()."=".intval($where);
+		} elseif(is_string($where)) {
+			$_where = $where;
+		} elseif(is_array($where)) {
+				foreach($where as $k=>$v)
+					$_where .= "AND ".$k." LIKE '".$v."' ";
 		}
-		$sql = (stristr($sql_extra,"SELECT")!==false) ? $sql_extra : "SELECT * FROM ".self::$table." WHERE 1 ".$sql_extra;
-		//Debugger::trace('sql',$sql,true);
-
+		if($args['order']) $_order .= " ORDER BY ".$args['order'];
+		if($args['limit']) $_limit .= " LIMIT ".$args['limit'];
+		$sql = (stristr($args[0],"SELECT")!==false) ? $args[0] : "SELECT * FROM ".self::$table." WHERE 1 ".$_where.$_order.$_limit;
+//		Debugger::trace('sql',$sql,true);
 		// make the query
-		$results = self::$db->query($sql);
-		$num_rows = self::$db->num_rows($results);
-
+		$results = Config::instance()->db->query($sql);
 		//Parse the results
 		$return = array();
-		while($row = self::$db->fetch_array($results))
+		while($row = Config::instance()->db->fetch_array($results))
 		{
 			$classname = ucfirst(self::$table);
 			$obj = new $classname();
 			$obj->set($row);
 			array_push($return, $obj);
 		}
+//		Debugger::trace('results',$return,true);
 		return $return;
 	}
 
 
 	public function save ($_matchcolumn=null,$_data=null) {
-		$matchcolumn = $this->getMatchColumn($_matchcolumn);
+		$matchcolumn = ($_matchcolumn==null) ? $this->matchcolumn : $_matchcolumn;
 		if($_data==null)
 			$_data = (array)$this;
-		$this->sql = self::$db->build_sql(self::$table,$_matchcolumn,$_data);
-		$saved = self::$db->query($this->sql); 
+		$this->sql = self::$db->build_sql(self::$table,$matchcolumn,$_data);
+//		Debugger::trace('matchcolumn',$matchcolumn,true);
+//		Debugger::trace('sql',$this->sql,true);
+		$saved = self::$db->query($this->sql);
 		if(stristr($this->sql,"INSERT")!==false && $saved==true)
-			$this->$matchcolumn = self::$db->insert_id();
+			$this->$matchcolumn = self::$db->insert_id($db);
 		return $saved;
 	}
 

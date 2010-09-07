@@ -6,9 +6,9 @@ class Config
 	 *	SITE CONFIGURATION
 	 */
 	public $SITE_NAME = "Erector!";
-	private static $ENV_PRODUCTION = "erector.kageki.com";
+	private static $ENV_PRODUCTION = "www.yourdomain.com";
 	private static $ENV_STAGE = "";
-	private static $ENV_DEV = "localhost:9090";
+	private static $ENV_DEV = "localhost";
 	private $EMAIL_NAME = "Erector";
 	private $EMAIL_ADDRESS = "no-reply@kageki.com";
 
@@ -28,8 +28,8 @@ class Config
 		'type' => "mysql",
 		'host' => "localhost",
 		'db' => "erectordb",
-		'user' => "",
-		'pass' => ""
+		'user' => "root",
+		'pass' => "root"
 	);
 	//DEVELOPMENT
 	private $dsn_dev = array(
@@ -43,15 +43,25 @@ class Config
 	/**
 	 *	STYLECONFIGURATION
 	 */
-	const DATEFORMAT = "M dS, Y";
+	const DATEFORMAT = "M.d.Y";
 	const TIMEZONE = "America/New_York";
-	const PERPAGE = 10;
+	const PERPAGE = 20;
+
+
+	const GOOGLE_MAPS_KEY = "";
 
 	/**
 	 * FACEBOOK
 	 */
+	const FB_APPID = '';
 	const FB_APIKEY = '';
 	const FB_APISECRET = '';
+
+	/**
+	 * TWITTER
+	 */
+	const TWITTER_APIKEY = '';
+	const TWITTER_APISECRET = '';
 
 	/**
 	 * Amazon Web Services
@@ -69,6 +79,7 @@ class Config
 
 	private function __construct() {
 		define('LIB',getcwd() . "/../lib");
+		define('WEBROOT',getcwd() . "");
 		define('APP',getcwd() . "/../application");
 		date_default_timezone_set(Config::TIMEZONE);
 
@@ -81,6 +92,22 @@ class Config
 		include_once LIB.'/Paginate.class.php';				//List pagination class
 		include_once LIB.'/Debugger.class.php';				//Debugging tools
 		include_once LIB.'/facebook/facebook.php';			//Facebook applications & pages
+
+		// Establish the Database connection once
+		$env = "dsn_".strtolower(self::getEnvironment());
+		$dsn =& $this->$env;
+		$class = 'ErectorDB_'.$dsn['type'];
+		include_once LIB.'/db/'.$class.'.class.php';
+
+
+		try {
+			if(class_exists($class))
+				$this->db = new $class($dsn);
+			else
+				throw new Exception("The db class ".$class." could not be created");
+		} catch (Exception $e) {
+			echo $e->getMessage()."\n";
+		}
 	}
 
 	private static $_instance;
@@ -90,6 +117,11 @@ class Config
 			self::$_instance = new $_classname;
 		}
 		return self::$_instance;
+	}
+
+	public function getDSN($env=null) {
+		$dsn_name = "dsn_".($env ? $env : strtolower($this->getEnvironment()));
+		return $this->$dsn_name;
 	}
 
 	private function getEnvironment () {
@@ -105,15 +137,6 @@ class Config
 			return "PRODUCTION";
 		break;
 		}
-	}
-	
-	public function config() {
-		// Establish the Database connection once
-		$env = "dsn_".strtolower(self::getEnvironment());
-		$dsn =& $this->$env;
-		$class = 'ErectorDB_'.$dsn['type'];
-		include_once LIB.'/db/'.$class.'.class.php';
-		$this->db = new $class($dsn);
 	}
 
 }

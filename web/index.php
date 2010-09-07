@@ -2,7 +2,7 @@
 /**
  * DEBUGGING AND ERROR REPORTING
  */
-define("DEBUG",true); 
+define("DEBUG",true);
 ini_set('display_errors', DEBUG);
 ini_set('error_reporting', (DEBUG ? (E_ERROR | E_WARNING | E_PARSE ) : E_ERROR));
 
@@ -11,8 +11,8 @@ ini_set('error_reporting', (DEBUG ? (E_ERROR | E_WARNING | E_PARSE ) : E_ERROR))
  * Initialize configuration and load the codebase
  * 
  */
-include_once getcwd().'/../application/Config.class.php';
-Config::instance()->config();
+include_once getcwd().'/../application/Config.class.php';				//Settings and configuration
+Config::instance();
 
 /**
  * 
@@ -36,11 +36,11 @@ function __autoload($class_name) {
  * CONTROLLER
  * 
  * Load the appropriate controller class based on 
- * the URL. Will look for views if no controller is 
- * available.
+ * the URL. 
  * 
- * This allows for static pages to be added with no
- * controller class. Not that you should... but you could.
+ * Will also look for views if no controller is 
+ * available. This allows you to create static pages with no
+ * controller. Not that you should... but you could.
  * 
  * By convention the controllers are named in plural:
  * i.e. Users

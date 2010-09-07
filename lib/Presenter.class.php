@@ -33,7 +33,8 @@ class Presenter
 	public function present() {
 		$method = $this->controller->format;
 		$this->$method();
-		Session::instance()->set('feedback',"");
+		if(!isset($this->controller->redirect))
+			Session::instance()->set('feedback',"");
 	}	
 
 	private function validateTemplate () {

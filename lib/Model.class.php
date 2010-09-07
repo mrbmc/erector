@@ -50,18 +50,40 @@ abstract class Model {
 	public static function load () {
 		$args = func_get_args();
 		$args = $args[0];
-		$where = (isset($args['where'])) ? $args['where'] : $args;
+
+		if(is_array($args)) {
+			$where = isset($args['where']) ? $args['where'] : $args;
+			if($args['select']) $_select .= ",".(is_array($args['select'])?implode(","):$args['select']);
+			if($args['order']) $_order .= " ORDER BY ".$args['order'];
+			if($args['limit']) $_limit .= " LIMIT ".$args['limit'];
+		} else
+			$where = $args;
+
 		if(is_numeric($where)) {
-			$_where = "AND ".$this->getMatchColumn()."=".intval($where);
+			$_where = "AND ".(self::$table.'id')."=".intval($where);
+		} elseif(is_string($where)) {
+			$_where = $where;
+		} elseif(is_array($where) && count($where)>0) {
+				foreach($where as $k=>$v)
+					if($k!='select' && $k!='order' && $k!='limit')
+						$_where .= "AND ".$k." LIKE '".$v."' ";
+		}
+/*
+		$where = (is_array($args) && isset($args['where'])) ? $args['where'] : $args;
+		if(is_numeric($where)) {
+			$_where = "AND ".(self::$table.'id')."=".intval($where);
 		} elseif(is_string($where)) {
 			$_where = $where;
 		} elseif(is_array($where)) {
 				foreach($where as $k=>$v)
 					$_where .= "AND ".$k." LIKE '".$v."' ";
 		}
+		if($args['select']) $_select .= ",".(is_array($args['select'])?implode(","):$args['select']);
 		if($args['order']) $_order .= " ORDER BY ".$args['order'];
 		if($args['limit']) $_limit .= " LIMIT ".$args['limit'];
-		$sql = (stristr($args[0],"SELECT")!==false) ? $args[0] : "SELECT * FROM ".self::$table." WHERE 1 ".$_where.$_order.$_limit;
+*/
+
+		$sql = (stristr($args[0],"SELECT")!==false) ? $args[0] : "SELECT *".$_select." FROM ".self::$table." WHERE 1 ".$_where.$_order.$_limit;
 //		Debugger::trace('sql',$sql,true);
 		// make the query
 		$results = Config::instance()->db->query($sql);
@@ -83,9 +105,9 @@ abstract class Model {
 		$matchcolumn = ($_matchcolumn==null) ? $this->matchcolumn : $_matchcolumn;
 		if($_data==null)
 			$_data = (array)$this;
-		$this->sql = self::$db->build_sql(self::$table,$matchcolumn,$_data);
-//		Debugger::trace('matchcolumn',$matchcolumn,true);
+		$class = get_class($this);
 //		Debugger::trace('sql',$this->sql,true);
+		$this->sql = self::$db->build_sql(self::$table,$matchcolumn,$_data);
 		$saved = self::$db->query($this->sql);
 		if(stristr($this->sql,"INSERT")!==false && $saved==true)
 			$this->$matchcolumn = self::$db->insert_id($db);

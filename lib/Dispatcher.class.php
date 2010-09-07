@@ -10,11 +10,11 @@ class Dispatcher
 {
 	public $controllerInstance;
 
-	public $controller = "Index";
+	public $controller = "Controller";
 	public $action = "index";
 	public $view = "index";
 	public $params;
-	public $format = 'html';
+	public $format = false;
 
 	private function __construct() {}
 
@@ -31,10 +31,11 @@ class Dispatcher
 		if($_SERVER["REQUEST_URI"]=="/")
 			return;
 
+		//catch the dot suffix for formatting
 		if(stristr($_SERVER['REDIRECT_URL'],".")) {
 			$tmp = explode(".",$_SERVER['REDIRECT_URL']);
 			$url = $tmp[0];
-			$format = $tmp[1];
+			$this->format = strtolower(trim($tmp[1]));
 		} else
 			$url = $_SERVER['REDIRECT_URL'];
 
@@ -51,6 +52,8 @@ class Dispatcher
 		$count = count($args);
 		$this->controller = $this->validateController($args[0]);
 		$this->action = $this->validateAction($args[1]);
+		if(count($args)<=0)
+			return;
 
 		if($this->action==$args[1]) {
 			$params = array_slice($args,2);
@@ -63,10 +66,15 @@ class Dispatcher
 		else
 			$this->params['id'] = $params[0];
 
-		if($this->controller!=$args[0]) {
-			$this->view = $args[0];
+		// invalid controller specified
+		if(strtolower($this->controller)!=strtolower($args[0])) {
+			$this->view = $this->params['id'] = $args[0];
+			if($args[0]!=$this->action && $this->action!='index') {
+					$this->controller = "Profile";
+					$this->action = "show";
+			}
+			//Debugger::trace('dispatcher',Dispatcher::instance(),true);
 		}
-
 
 		// Override the neat URL structure with key=val pairs
 		if(isset($_GET['controller']))
@@ -77,10 +85,6 @@ class Dispatcher
 			$this->action = trim($_GET['action']);
 		if(isset($_GET['id']))
 			$this->params['id'] = trim($_GET['id']);
-
-		if(isset($format))
-			$this->format = strtolower(trim($format));
-
 	}
 
 	private function validateController ($_class=null) {
@@ -108,7 +112,10 @@ class Dispatcher
 	private function executeController ($_controller=null) {
 		$controller = $this->validateController($_controller);
 		$path = ($this->controller=="Controller")?(LIB . "/Controller.class.php"):(APP."/controllers/" . $this->controller . ".php");
-		include_once ($path);
+//		Debugger::trace('path',$path,true);
+//		Debugger::trace('controller',$controller,true);
+		if(file_exists($path)) 
+			include_once ($path);
 		$this->controllerInstance = new $controller();
 	}
 
@@ -127,6 +134,7 @@ class Dispatcher
 		if($this->format)
 			$this->controllerInstance->format = $this->format;
 
+//		echo $this->controllerInstance->format;
 		//Debugger::trace('dispatcher',Dispatcher::instance(),true);
 	}
 }
